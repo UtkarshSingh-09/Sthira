@@ -36,7 +36,7 @@ class AppErrorBoundary extends React.Component {
             <button
               type="button"
               onClick={() => { window.location.href = '/dashboard' }}
-              className="rounded-lg bg-[#45A29E]/20 border border-[#45A29E]/40 text-[#45A29E] font-semibold hover:bg-[#45A29E]/30"
+              className="rounded-lg bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 font-semibold hover:bg-emerald-500/30"
               style={{ padding: '10px 14px', fontSize: 13 }}
             >
               Go To Dashboard
@@ -53,10 +53,12 @@ export default function App() {
   return (
     <Router>
       <AppErrorBoundary>
-        <div className="relative min-h-screen bg-void w-full min-w-0 overflow-x-hidden text-white font-sans selection:bg-[#45f3ff]/30 selection:text-white">
+        <div className="relative min-h-screen bg-void w-full min-w-0 overflow-x-hidden text-white font-sans selection:bg-emerald-500/25 selection:text-white">
           <Routes>
             <Route path="/" element={<LandingPage />} />
-            <Route path="/auth" element={<Auth />} />
+            <Route path="/auth" element={<Auth defaultMode="signup" />} />
+            <Route path="/login" element={<Auth defaultMode="login" />} />
+            <Route path="/signup" element={<Auth defaultMode="signup" />} />
             <Route path="/onboard" element={<Onboard />} />
             <Route path="/fire" element={<FirePage />} />
             <Route path="/tax" element={<TaxPage />} />
