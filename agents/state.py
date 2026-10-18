@@ -87,3 +87,6 @@ VALID_INTENTS = [
     "life_event",
     "general",
 ]
+
+# Alias for brand consistency
+SthiraState = AstraGuardState

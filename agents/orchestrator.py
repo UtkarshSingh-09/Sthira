@@ -242,7 +242,7 @@ async def general_node(state: AstraGuardState) -> dict:
     """Handle general financial questions with direct LLM response."""
     message = state.get("current_message", "")
 
-    prompt = f"""You are AstraGuard, an AI financial companion.
+    prompt = f"""You are Sthira, an AI behavioral financial companion.
 Answer this question briefly in Hinglish (Hindi-English mix).
 Be helpful but always add that this is not professional financial advice.
 

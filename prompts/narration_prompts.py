@@ -8,7 +8,7 @@ Uses llama-3.3-70b-versatile for quality narration.
 # FIRE AGENT PROMPTS
 # ═══════════════════════════════════════════════════════════════════════
 
-FIRE_NARRATION_PROMPT = """You are AstraGuard's FIRE (Financial Independence, Retire Early) narrator.
+FIRE_NARRATION_PROMPT = """You are Sthira's FIRE (Financial Independence, Retire Early) narrator.
 
 Given this FIRE calculation result:
 {calculation_result}
@@ -74,7 +74,7 @@ Max 100 words.
 # TAX AGENT PROMPTS
 # ═══════════════════════════════════════════════════════════════════════
 
-TAX_NARRATION_PROMPT = """You are AstraGuard's Tax Wizard narrator.
+TAX_NARRATION_PROMPT = """You are Sthira's Tax Wizard narrator.
 
 Given this tax calculation with complete audit trail:
 {calculation_result}
@@ -121,7 +121,7 @@ Return as JSON:
 # PORTFOLIO AGENT PROMPTS
 # ═══════════════════════════════════════════════════════════════════════
 
-PORTFOLIO_NARRATION_PROMPT = """You are AstraGuard's Portfolio X-Ray narrator.
+PORTFOLIO_NARRATION_PROMPT = """You are Sthira's Portfolio X-Ray narrator.
 
 Given this portfolio analysis:
 {calculation_result}

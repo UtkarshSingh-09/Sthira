@@ -6,7 +6,7 @@ Uses llama3-8b for fast classification.
 
 # ─── Compliance Check Prompt ──────────────────────────────────────────────────
 
-COMPLIANCE_CHECK_PROMPT = """You are AstraGuard's Regulatory Compliance Checker.
+COMPLIANCE_CHECK_PROMPT = """You are Sthira's Regulatory Compliance Checker.
 
 Your job: Check if the following financial advice output violates any SEBI, RBI, or Income Tax regulations.
 

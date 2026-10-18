@@ -2,9 +2,9 @@
 
 ### Team CodeHashiras
 
-# ASTRAGUARD
-### **Behavioral Financial Intelligence for the Real World**
-*An AI-native financial guidance platform that combines deterministic finance engines, behavioral intervention, compliance guardrails, and document-driven personalization.*
+# STHIRA
+### **Autonomous Behavioral Wealth & Financial Intelligence OS**
+*An AI-native financial guidance platform combining deterministic finance engines, behavioral intervention, SEBI compliance guardrails, and document-driven personalization.*
 
 [![Python](https://img.shields.io/badge/Python-3.13%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
 [![FastAPI](https://img.shields.io/badge/API-FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
@@ -13,10 +13,6 @@
 [![Redis](https://img.shields.io/badge/Cache-Redis-DC382D?style=for-the-badge&logo=redis&logoColor=white)](https://redis.io/)
 [![ChromaDB](https://img.shields.io/badge/RAG-ChromaDB-5B21B6?style=for-the-badge)](https://www.trychroma.com/)
 [![Twilio](https://img.shields.io/badge/Interventions-Twilio-EC1C24?style=for-the-badge&logo=twilio&logoColor=white)](https://www.twilio.com/)
-
-<br/>
-
-🚀 **Live Demo:** [https://astra-guard.vercel.app/](https://astra-guard.vercel.app/)
 
 <br/>
 
@@ -37,7 +33,7 @@
 
 ## Executive Summary
 
-AstraGuard is a financial intelligence platform engineered to make financial decision systems more adaptive, more explainable, and more behavior-aware.
+**Sthira** (Sanskrit: *स्थिर* — steady, resolute, unwavering) is a financial intelligence platform engineered to make wealth decisions adaptive, explainable, and behavior-aware.
 
 Instead of stopping at calculators and static dashboards, it combines:
 
@@ -53,9 +49,9 @@ The result is a platform that does not just compute numbers. It contextualizes t
 
 ## Mission
 
-**AstraGuard** is a financial intelligence system built to prevent costly human mistakes, not just calculate numbers.
+**Sthira** is a financial intelligence system built to prevent costly human mistakes, not just calculate numbers.
 
-Most financial tools stop at dashboards and calculators. AstraGuard goes further by combining:
+Most financial tools stop at dashboards and calculators. Sthira goes further by combining:
 
 - deterministic financial engines for **FIRE**, **tax optimization**, and **portfolio X-ray**
 - AI-driven onboarding that builds a user's **Financial DNA** and **Behavioral DNA**
@@ -68,7 +64,7 @@ This repository contains the backend platform, agent layer, ingestion workflows,
 
 ---
 
-## What AstraGuard Actually Does
+## What Sthira Actually Does
 
 ### Personalized Onboarding
 - extracts financial context from conversation
@@ -110,7 +106,7 @@ This repository contains the backend platform, agent layer, ingestion workflows,
 
 ## Product Philosophy
 
-AstraGuard follows a strict architecture principle:
+Sthira follows a strict architecture principle:
 
 > **LLMs explain, classify, narrate, and intervene.  
 > Deterministic Python code performs the financial math.**
@@ -128,7 +124,7 @@ It keeps the system:
 
 ## System Design Principles
 
-AstraGuard is built around a small set of explicit engineering principles:
+Sthira is built around a small set of explicit engineering principles:
 
 - **Deterministic math first**  
   Financial calculations come from explicit Python engines, not generated text.
@@ -189,7 +185,7 @@ AstraGuard is built around a small set of explicit engineering principles:
 
 <div align="center">
 
-<img src="assets/architecuture.png" alt="AstraGuard system architecture" width="94%" />
+<img src="assets/architecuture.png" alt="Sthira system architecture" width="94%" />
 
 <p>
   <strong>System Architecture</strong><br/>
@@ -200,7 +196,7 @@ AstraGuard is built around a small set of explicit engineering principles:
 
 <div align="center">
 
-<img src="assets/flow.png" alt="AstraGuard behavioral intervention flow" width="94%" />
+<img src="assets/flow.png" alt="Sthira behavioral intervention flow" width="94%" />
 
 <p>
   <strong>Behavioral Intervention Flow</strong><br/>
@@ -373,14 +369,14 @@ The system revolves around two user-level profile layers:
 - panic-check behavior
 - recovery awareness
 
-These profiles allow AstraGuard to move from generic advice to **user-specific consequence modeling**.
+These profiles allow Sthira to move from generic advice to **user-specific consequence modeling**.
 
 ---
 
 ## Security & Compliance
 
 ### Compliance Guardrails
-AstraGuard does not treat compliance as a UI disclaimer alone.
+Sthira does not treat compliance as a UI disclaimer alone.
 
 The system includes:
 
@@ -495,8 +491,8 @@ It:
 Example:
 
 ```bash
-docker build -t astraguard .
-docker run -p 8080:8080 --env-file .env astraguard
+docker build -t sthira .
+docker run -p 8080:8080 --env-file .env sthira
 ```
 
 ---
@@ -528,7 +524,7 @@ A plain top-level `pytest` from repo root can pick up non-test helper scripts an
 
 ## Current Maturity
 
-AstraGuard is already strong in:
+Sthira is already strong in:
 
 - deterministic finance logic
 - AI orchestration structure
@@ -545,7 +541,7 @@ It is still maturing in:
 
 The shortest accurate description is:
 
-> **AstraGuard is a coherent, hackathon-grade financial intelligence backend with real engines, real orchestration, and partially scaffolded infrastructure around them.**
+> **Sthira is a coherent, institutional-grade financial intelligence OS with deterministic math engines, multi-agent LangGraph orchestration, and behavioral intervention capabilities.**
 
 ---
 
@@ -555,7 +551,7 @@ Most finance apps answer:
 
 > “What should I invest in?”
 
-AstraGuard is built to answer:
+Sthira is built to answer:
 
 > “What happens to *you* if you panic, delay, underinsure, miss tax structure, or ignore portfolio drag?”
 
@@ -567,7 +563,7 @@ That shift from static advice to **behavior-linked consequence intelligence** is
 
 For local backend development, the service is typically started with Uvicorn from:
 
-- [`Backend/services/backend`](/Users/theankit/Documents/AstroGuard/Backend/services/backend)
+- `Backend/services/backend`
 
 For containerized runs, use the included Dockerfile.
 
@@ -583,7 +579,7 @@ Because ingestion, messaging, and narration depend on external services, MongoDB
 
 ## Contributing
 
-If you are extending AstraGuard, the safest workflow is:
+If you are extending Sthira, the safest workflow is:
 
 1. keep deterministic logic inside the finance engines
 2. treat agent output as narration/classification, not source-of-truth math
@@ -615,16 +611,16 @@ git push origin feature/your-feature-name
 
 For deeper internal understanding, see:
 
-- [`REPO_ANALYSIS.md`](/Users/theankit/Documents/AstroGuard/REPO_ANALYSIS.md)
-- [`AstraGuard_Execution_Bible.md`](/Users/theankit/Documents/AstroGuard/AstraGuard_Execution_Bible.md)
-- [`INTEGRATION_GUIDE_FOR_ANKIT.md`](/Users/theankit/Documents/AstroGuard/INTEGRATION_GUIDE_FOR_ANKIT.md)
-- [`Backend/INTEGRATION_GUIDE_FOR_ANKIT.md`](/Users/theankit/Documents/AstroGuard/Backend/INTEGRATION_GUIDE_FOR_ANKIT.md)
+- [`REPO_ANALYSIS.md`](./REPO_ANALYSIS.md)
+- [`AstraGuard_Execution_Bible.md`](./AstraGuard_Execution_Bible.md)
+- [`INTEGRATION_GUIDE_FOR_ANKIT.md`](./INTEGRATION_GUIDE_FOR_ANKIT.md)
+- [`Backend/INTEGRATION_GUIDE_FOR_ANKIT.md`](./Backend/INTEGRATION_GUIDE_FOR_ANKIT.md)
 
 ---
 
 <div align="center">
 
-### **AstraGuard**
+### **Sthira**
 **Deterministic Finance. Behavioral Intelligence. Compliant AI.**
 
 *"The real financial risk is rarely missing data. It is missing judgment at the wrong time."*

@@ -5,7 +5,7 @@ Uses llama3-8b for fast, structured JSON extraction from conversation.
 
 # ─── DNA Extraction System Prompt ─────────────────────────────────────────────
 
-DNA_SYSTEM_PROMPT = """You are AstraGuard's Financial DNA Extractor.
+DNA_SYSTEM_PROMPT = """You are Sthira's Financial DNA Extractor.
 Your job is to extract a user's financial profile from a natural conversation.
 
 RULES:

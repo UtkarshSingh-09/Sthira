@@ -3,12 +3,12 @@ from pydantic_settings import BaseSettings
 
 
 class Settings(BaseSettings):
-    app_name: str = "AstraGuard Backend"
+    app_name: str = "Sthira Backend"
     app_env: str = Field(default="dev")
     app_debug: bool = Field(default=True)
 
     mongodb_uri: str = Field(default="")
-    mongodb_db_name: str = Field(default="astraguard")
+    mongodb_db_name: str = Field(default="sthira")
     mongodb_atlas_required: bool = Field(default=True)
 
     redis_url: str = Field(default="")

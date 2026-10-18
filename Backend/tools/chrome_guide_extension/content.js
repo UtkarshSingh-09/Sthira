@@ -172,7 +172,7 @@
 
   const I18N = {
     hi: {
-      "Guide completed. Continue workflow in AstraGuard dashboard.": "गाइड पूरी हो गई। AstraGuard डैशबोर्ड में आगे बढ़ें।",
+      "Guide completed. Continue workflow in Sthira dashboard.": "गाइड पूरी हो गई। Sthira डैशबोर्ड में आगे बढ़ें।",
       "Wrong site for CAMS guide. Open KFin CAS page: mfs.kfintech.com": "CAMS गाइड के लिए गलत साइट है। KFin CAS पेज खोलें: mfs.kfintech.com",
       "Wrong site for Form16 guide. Open TRACES page: tdscpc.gov.in": "Form16 गाइड के लिए गलत साइट है। TRACES पेज खोलें: tdscpc.gov.in",
       "Click top menu 'Tax Payer'.": "ऊपर वाले मेन्यू में 'Tax Payer' पर क्लिक करें।",
@@ -189,7 +189,7 @@
       "Submit request/check status, then click Download when available.": "Request submit/status check करें, उपलब्ध होने पर Download करें।"
     },
     hinglish: {
-      "Guide completed. Continue workflow in AstraGuard dashboard.": "Guide complete ho gayi. AstraGuard dashboard par continue karo.",
+      "Guide completed. Continue workflow in Sthira dashboard.": "Guide complete ho gayi. Sthira dashboard par continue karo.",
       "Wrong site for CAMS guide. Open KFin CAS page: mfs.kfintech.com": "CAMS guide ke liye wrong site hai. KFin CAS page kholo: mfs.kfintech.com",
       "Wrong site for Form16 guide. Open TRACES page: tdscpc.gov.in": "Form16 guide ke liye wrong site hai. TRACES page kholo: tdscpc.gov.in",
       "Click top menu 'Tax Payer'.": "Top menu me 'Tax Payer' par click karo.",
@@ -226,7 +226,7 @@
     const box = document.createElement("div");
     box.id = "astra-guide-overlay";
     box.innerHTML = `
-      <div class="astra-guide-header">AstraGuard Guide</div>
+      <div class="astra-guide-header">Sthira Guide</div>
       <div id="astra-guide-body"></div>
       <div id="astra-guide-meta"></div>
       <div class="astra-guide-actions">
@@ -390,7 +390,7 @@
     if (!state.active) return;
     clearHighlights();
     if (state.stepIndex >= state.steps.length) {
-      updateOverlay("Guide completed. Continue workflow in AstraGuard dashboard.", "All steps complete");
+      updateOverlay("Guide completed. Continue workflow in Sthira dashboard.", "All steps complete");
       persistGuide(false);
       return;
     }

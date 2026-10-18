@@ -1,1 +1,1 @@
-# AstraGuard Prompts Package
+# Sthira Prompts Package

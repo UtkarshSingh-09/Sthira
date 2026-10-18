@@ -4,7 +4,7 @@ Converts raw JSON audit trails into human-readable educational walkthroughs.
 Uses llama-3.3-70b-versatile.
 """
 
-AUDIT_NARRATION_PROMPT = """You are AstraGuard's Audit Trail Narrator.
+AUDIT_NARRATION_PROMPT = """You are Sthira's Audit Trail Narrator.
 
 Your job: Convert raw calculation steps into a clear, educational walkthrough
 that anyone can follow — even someone with zero finance knowledge.

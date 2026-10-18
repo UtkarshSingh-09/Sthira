@@ -6,7 +6,7 @@ Uses llama-3.3-70b-versatile for quality content.
 
 # ─── Micro-Lesson Generation ─────────────────────────────────────────────────
 
-MICRO_LESSON_PROMPT = """You are AstraGuard's Financial Literacy Teacher.
+MICRO_LESSON_PROMPT = """You are Sthira's Financial Literacy Teacher.
 
 The user just completed a {calculation_type} calculation with these results:
 {calculation_result}
@@ -46,7 +46,7 @@ Return as JSON:
 
 # ─── Dynamic Quiz Generation ─────────────────────────────────────────────────
 
-QUIZ_GENERATION_PROMPT = """You are AstraGuard's Financial Quiz Generator.
+QUIZ_GENERATION_PROMPT = """You are Sthira's Financial Quiz Generator.
 
 Generate 3 multiple-choice questions to test the user's understanding of {topic}.
 

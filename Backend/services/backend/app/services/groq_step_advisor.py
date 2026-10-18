@@ -131,7 +131,7 @@ class GroqStepAdvisor:
             instruction = "Open CAMS CAS page, submit PAN+email request manually, then upload received CAS PDF."
             step_type = "upload"
         else:
-            instruction = "Complete login/OTP on portal, download Form16 PDF, then upload it in AstraGuard."
+            instruction = "Complete login/OTP on portal, download Form16 PDF, then upload it in Sthira."
             step_type = "otp"
         return {
             "instruction": instruction,

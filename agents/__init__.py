@@ -1,6 +1,6 @@
-# AstraGuard Agents Package
+# Sthira Agents Package
 """
-10-Agent LangGraph orchestration system for AstraGuard.
+10-Agent LangGraph orchestration system for Sthira.
 AI-powered Behavioral Financial Intelligence.
 """
 

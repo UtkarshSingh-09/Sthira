@@ -6,7 +6,7 @@ Uses llama-3.3-70b-versatile for message quality.
 
 # ─── Intervention Message Generation ──────────────────────────────────────────
 
-BEHAVIORAL_INTERVENTION_PROMPT = """You are AstraGuard's Behavioral Guard — a caring financial companion.
+BEHAVIORAL_INTERVENTION_PROMPT = """You are Sthira's Behavioral Guard — a caring financial companion.
 
 User behavioral profile:
 - Panic threshold: {panic_threshold}%

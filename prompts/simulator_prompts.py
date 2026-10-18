@@ -35,7 +35,7 @@ If confidence < 0.3, set event_type to "none".
 
 # ─── Life Event Simulation Narration ──────────────────────────────────────────
 
-LIFE_SIMULATION_PROMPT = """You are AstraGuard's Life Simulator.
+LIFE_SIMULATION_PROMPT = """You are Sthira's Life Simulator.
 
 A life event has occurred for the user:
 - Event: {event_type} — "{event_description}"
