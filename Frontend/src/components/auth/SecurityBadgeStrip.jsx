@@ -36,18 +36,18 @@ export default function SecurityBadgeStrip() {
         return (
           <div 
             key={idx}
-            className="p-3.5 rounded-xl bg-slate-900/60 border border-white/5 hover:border-emerald-500/30 transition duration-300"
+            className="p-3.5 rounded-xl bg-[#1C1510]/80 border border-[#443627] hover:border-[#D98324]/60 transition duration-300"
           >
             <div className="flex items-center space-x-2 mb-1.5">
-              <div className="p-1.5 rounded-lg bg-emerald-500/10 text-emerald-400">
+              <div className="p-1.5 rounded-lg bg-[#D98324]/15 text-[#D98324]">
                 <Icon className="h-4 w-4" />
               </div>
               <div>
-                <div className="text-xs font-semibold text-slate-200">{b.title}</div>
-                <div className="text-[10px] font-mono text-emerald-400/80">{b.subtitle}</div>
+                <div className="text-xs font-semibold text-[#F2F6D0]">{b.title}</div>
+                <div className="text-[10px] font-mono text-[#EFDCAB]">{b.subtitle}</div>
               </div>
             </div>
-            <p className="text-[11px] text-slate-400 leading-relaxed">
+            <p className="text-[11px] text-[#EFDCAB]/75 leading-relaxed">
               {b.desc}
             </p>
           </div>

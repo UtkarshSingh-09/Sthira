@@ -14,16 +14,12 @@ export default function TaxPage() {
   const [hraRent, setHraRent] = useState(300000);
   const [homeLoan24b, setHomeLoan24b] = useState(0);
 
-  // Deterministic Indian Tax Calculations FY 2024-25 / 2025-26
-  // Standard Deduction: ₹75,000 for New Regime, ₹50,000 for Old Regime
   const oldStdDed = 50000;
   const newStdDed = 75000;
 
-  // Old Regime Taxable Income
   const oldTotalDeductions = oldStdDed + Math.min(150000, ded80C) + Math.min(25000, ded80D) + Math.min(50000, dedNps) + hraRent + Math.min(200000, homeLoan24b);
   const oldTaxableIncome = Math.max(0, salary - oldTotalDeductions);
 
-  // Old Slabs: 0-2.5L: 0, 2.5-5L: 5%, 5-10L: 20%, >10L: 30%
   let oldTax = 0;
   if (oldTaxableIncome > 1000000) {
     oldTax = 112500 + (oldTaxableIncome - 1000000) * 0.3;
@@ -35,7 +31,6 @@ export default function TaxPage() {
   const oldCess = oldTax * 0.04;
   const oldFinalTax = Math.round(oldTax + oldCess);
 
-  // New Regime Taxable Income (Sec 115BAC)
   const newTaxableIncome = Math.max(0, salary - newStdDed);
   let newTax = 0;
   if (newTaxableIncome > 1500000) {
@@ -59,38 +54,38 @@ export default function TaxPage() {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 animate-fadeIn">
       {/* Header */}
       <div>
-        <div className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-xs font-mono text-emerald-400 mb-2">
-          <Receipt className="h-3.5 w-3.5" />
+        <div className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-[#D98324]/15 border border-[#D98324]/40 text-xs font-mono text-[#EFDCAB] mb-2">
+          <Receipt className="h-3.5 w-3.5 text-[#D98324]" />
           <span>TAX ARBITRAGE & RECONCILIATION ENGINE</span>
         </div>
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-white">
+        <h1 className="text-2xl sm:text-3xl font-extrabold text-[#F2F6D0]">
           Old vs New Regime (Section 115BAC) Comparison
         </h1>
-        <p className="text-xs text-slate-400 mt-1">
+        <p className="text-xs text-[#EFDCAB]/75 mt-1">
           Deterministic slab calculation with missed deduction scanner under Section 80C, 80D, 80CCD(1B), and HRA.
         </p>
       </div>
 
       {/* Winner Recommendation Banner */}
       <div className={`p-6 rounded-2xl border ${
-        optimalRegime === 'OLD REGIME' ? 'bg-emerald-950/30 border-emerald-500/40' : 'bg-cyan-950/30 border-cyan-500/40'
+        optimalRegime === 'OLD REGIME' ? 'bg-[#271E16] border-[#D98324]/50' : 'bg-[#271E16] border-[#EFDCAB]/50'
       } flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-xl`}>
         <div className="space-y-1">
-          <div className="text-xs font-mono tracking-wider uppercase text-emerald-400 font-semibold flex items-center space-x-1.5">
+          <div className="text-xs font-mono tracking-wider uppercase text-[#D98324] font-semibold flex items-center space-x-1.5">
             <CheckCircle2 className="h-4 w-4" />
             <span>Optimal Tax Declaration for Payroll</span>
           </div>
-          <div className="text-2xl font-bold text-white">
-            Choose <span className="text-emerald-400 underline">{optimalRegime}</span> to save ₹{taxSavings.toLocaleString('en-IN')}
+          <div className="text-2xl font-bold text-[#F2F6D0]">
+            Choose <span className="text-[#D98324] underline">{optimalRegime}</span> to save ₹{taxSavings.toLocaleString('en-IN')}
           </div>
-          <p className="text-xs text-slate-400">
+          <p className="text-xs text-[#EFDCAB]/80">
             Based on your CTC of ₹{(salary/100000).toFixed(1)}L and current eligible deductions of ₹{(oldTotalDeductions/1000).toFixed(0)}k.
           </p>
         </div>
 
-        <div className="px-5 py-3 rounded-xl bg-slate-900 border border-white/10 text-right">
-          <div className="text-[10px] font-mono text-slate-400">NET ANNUAL SAVING</div>
-          <div className="text-2xl font-mono font-extrabold text-emerald-400">
+        <div className="px-5 py-3 rounded-xl bg-[#120E0A] border border-[#443627] text-right">
+          <div className="text-[10px] font-mono text-[#EFDCAB]/70">NET ANNUAL SAVING</div>
+          <div className="text-2xl font-mono font-extrabold text-[#D98324]">
             ₹{taxSavings.toLocaleString('en-IN')}
           </div>
         </div>
@@ -99,71 +94,71 @@ export default function TaxPage() {
       {/* Side-by-Side Comparison Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Old Regime Card */}
-        <div className="p-6 rounded-2xl bg-[#0E131F] border border-white/10 shadow-lg space-y-4">
-          <div className="flex items-center justify-between border-b border-white/10 pb-3">
-            <div className="font-bold text-lg text-white">Old Tax Regime</div>
-            <span className="text-xs font-mono text-slate-400">Standard Ded: ₹50,000</span>
+        <div className="p-6 rounded-2xl bg-[#1C1510] border border-[#443627] shadow-lg space-y-4">
+          <div className="flex items-center justify-between border-b border-[#443627] pb-3">
+            <div className="font-bold text-lg text-[#F2F6D0]">Old Tax Regime</div>
+            <span className="text-xs font-mono text-[#EFDCAB]/70">Standard Ded: ₹50,000</span>
           </div>
 
           <div className="space-y-2 text-xs">
-            <div className="flex justify-between py-1 border-b border-white/5">
-              <span className="text-slate-400">Gross Income:</span>
-              <span className="font-mono text-slate-200">₹{salary.toLocaleString('en-IN')}</span>
+            <div className="flex justify-between py-1 border-b border-[#443627]/40">
+              <span className="text-[#EFDCAB]/75">Gross Income:</span>
+              <span className="font-mono text-[#F2F6D0]">₹{salary.toLocaleString('en-IN')}</span>
             </div>
-            <div className="flex justify-between py-1 border-b border-white/5">
-              <span className="text-slate-400">Total Deductions Claimed:</span>
-              <span className="font-mono text-emerald-400 font-semibold">-₹{oldTotalDeductions.toLocaleString('en-IN')}</span>
+            <div className="flex justify-between py-1 border-b border-[#443627]/40">
+              <span className="text-[#EFDCAB]/75">Total Deductions Claimed:</span>
+              <span className="font-mono text-[#D98324] font-semibold">-₹{oldTotalDeductions.toLocaleString('en-IN')}</span>
             </div>
-            <div className="flex justify-between py-1 border-b border-white/5">
-              <span className="text-slate-400">Net Taxable Income:</span>
-              <span className="font-mono text-slate-200">₹{oldTaxableIncome.toLocaleString('en-IN')}</span>
+            <div className="flex justify-between py-1 border-b border-[#443627]/40">
+              <span className="text-[#EFDCAB]/75">Net Taxable Income:</span>
+              <span className="font-mono text-[#F2F6D0]">₹{oldTaxableIncome.toLocaleString('en-IN')}</span>
             </div>
-            <div className="flex justify-between py-1 border-b border-white/5">
-              <span className="text-slate-400">Tax Before Cess:</span>
-              <span className="font-mono text-slate-200">₹{Math.round(oldTax).toLocaleString('en-IN')}</span>
+            <div className="flex justify-between py-1 border-b border-[#443627]/40">
+              <span className="text-[#EFDCAB]/75">Tax Before Cess:</span>
+              <span className="font-mono text-[#EFDCAB]">₹{Math.round(oldTax).toLocaleString('en-IN')}</span>
             </div>
-            <div className="flex justify-between py-1 border-b border-white/5">
-              <span className="text-slate-400">Health & Edu Cess (4%):</span>
-              <span className="font-mono text-slate-200">₹{Math.round(oldCess).toLocaleString('en-IN')}</span>
+            <div className="flex justify-between py-1 border-b border-[#443627]/40">
+              <span className="text-[#EFDCAB]/75">Health & Edu Cess (4%):</span>
+              <span className="font-mono text-[#EFDCAB]/80">₹{Math.round(oldCess).toLocaleString('en-IN')}</span>
             </div>
             <div className="flex justify-between pt-2 text-sm font-bold">
-              <span className="text-white">Total Tax Payable:</span>
-              <span className="font-mono text-white text-base">₹{oldFinalTax.toLocaleString('en-IN')}</span>
+              <span className="text-[#F2F6D0]">Total Tax Payable:</span>
+              <span className="font-mono text-[#D98324] text-base">₹{oldFinalTax.toLocaleString('en-IN')}</span>
             </div>
           </div>
         </div>
 
         {/* New Regime Card */}
-        <div className="p-6 rounded-2xl bg-[#0E131F] border border-white/10 shadow-lg space-y-4">
-          <div className="flex items-center justify-between border-b border-white/10 pb-3">
-            <div className="font-bold text-lg text-white">New Tax Regime (115BAC)</div>
-            <span className="text-xs font-mono text-emerald-400">Standard Ded: ₹75,000</span>
+        <div className="p-6 rounded-2xl bg-[#1C1510] border border-[#443627] shadow-lg space-y-4">
+          <div className="flex items-center justify-between border-b border-[#443627] pb-3">
+            <div className="font-bold text-lg text-[#F2F6D0]">New Tax Regime (115BAC)</div>
+            <span className="text-xs font-mono text-[#D98324]">Standard Ded: ₹75,000</span>
           </div>
 
           <div className="space-y-2 text-xs">
-            <div className="flex justify-between py-1 border-b border-white/5">
-              <span className="text-slate-400">Gross Income:</span>
-              <span className="font-mono text-slate-200">₹{salary.toLocaleString('en-IN')}</span>
+            <div className="flex justify-between py-1 border-b border-[#443627]/40">
+              <span className="text-[#EFDCAB]/75">Gross Income:</span>
+              <span className="font-mono text-[#F2F6D0]">₹{salary.toLocaleString('en-IN')}</span>
             </div>
-            <div className="flex justify-between py-1 border-b border-white/5">
-              <span className="text-slate-400">Standard Deduction:</span>
-              <span className="font-mono text-emerald-400 font-semibold">-₹75,000</span>
+            <div className="flex justify-between py-1 border-b border-[#443627]/40">
+              <span className="text-[#EFDCAB]/75">Standard Deduction:</span>
+              <span className="font-mono text-[#D98324] font-semibold">-₹75,000</span>
             </div>
-            <div className="flex justify-between py-1 border-b border-white/5">
-              <span className="text-slate-400">Net Taxable Income:</span>
-              <span className="font-mono text-slate-200">₹{newTaxableIncome.toLocaleString('en-IN')}</span>
+            <div className="flex justify-between py-1 border-b border-[#443627]/40">
+              <span className="text-[#EFDCAB]/75">Net Taxable Income:</span>
+              <span className="font-mono text-[#F2F6D0]">₹{newTaxableIncome.toLocaleString('en-IN')}</span>
             </div>
-            <div className="flex justify-between py-1 border-b border-white/5">
-              <span className="text-slate-400">Tax Before Cess:</span>
-              <span className="font-mono text-slate-200">₹{Math.round(newTax).toLocaleString('en-IN')}</span>
+            <div className="flex justify-between py-1 border-b border-[#443627]/40">
+              <span className="text-[#EFDCAB]/75">Tax Before Cess:</span>
+              <span className="font-mono text-[#EFDCAB]">₹{Math.round(newTax).toLocaleString('en-IN')}</span>
             </div>
-            <div className="flex justify-between py-1 border-b border-white/5">
-              <span className="text-slate-400">Health & Edu Cess (4%):</span>
-              <span className="font-mono text-slate-200">₹{Math.round(newCess).toLocaleString('en-IN')}</span>
+            <div className="flex justify-between py-1 border-b border-[#443627]/40">
+              <span className="text-[#EFDCAB]/75">Health & Edu Cess (4%):</span>
+              <span className="font-mono text-[#EFDCAB]/80">₹{Math.round(newCess).toLocaleString('en-IN')}</span>
             </div>
             <div className="flex justify-between pt-2 text-sm font-bold">
-              <span className="text-white">Total Tax Payable:</span>
-              <span className="font-mono text-white text-base">₹{newFinalTax.toLocaleString('en-IN')}</span>
+              <span className="text-[#F2F6D0]">Total Tax Payable:</span>
+              <span className="font-mono text-[#EFDCAB] text-base">₹{newFinalTax.toLocaleString('en-IN')}</span>
             </div>
           </div>
         </div>

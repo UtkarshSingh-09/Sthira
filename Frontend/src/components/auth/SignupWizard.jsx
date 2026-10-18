@@ -89,7 +89,7 @@ export default function SignupWizard({ formData, setFormData, onSwitchToLogin })
     }
 
     if (currentStep === 3) {
-      return true; // Optional zero values permitted
+      return true;
     }
 
     if (currentStep === 4) {
@@ -134,23 +134,23 @@ export default function SignupWizard({ formData, setFormData, onSwitchToLogin })
       {/* Header & Step Indicator */}
       <div className="mb-6">
         <div className="flex items-center justify-between mb-2">
-          <div className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-xs font-mono text-emerald-400">
-            <ShieldCheck className="h-3.5 w-3.5" />
+          <div className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-[#D98324]/15 border border-[#D98324]/40 text-xs font-mono text-[#EFDCAB]">
+            <ShieldCheck className="h-3.5 w-3.5 text-[#D98324]" />
             <span>STEP {currentStep} OF 4 • RBI & SEBI ONBOARDING</span>
           </div>
           <button
             type="button"
             onClick={onSwitchToLogin}
-            className="text-xs text-slate-400 hover:text-emerald-400 transition"
+            className="text-xs text-[#EFDCAB] hover:text-[#D98324] transition font-medium"
           >
             Already have an account? <span className="underline">Sign In</span>
           </button>
         </div>
 
-        <h2 className="text-2xl font-bold tracking-tight text-white">
+        <h2 className="text-2xl font-bold tracking-tight text-[#F2F6D0]">
           Open Protected Wealth Account
         </h2>
-        <p className="text-xs text-slate-400 mt-1">
+        <p className="text-xs text-[#EFDCAB]/80 mt-1">
           Compliant onboarding with zero-leak biometric encryption and automated financial DNA intake.
         </p>
 
@@ -163,11 +163,15 @@ export default function SignupWizard({ formData, setFormData, onSwitchToLogin })
               <div key={s.id} className="relative">
                 <div 
                   className={`h-1.5 rounded-full transition-all duration-300 ${
-                    isDone ? 'bg-emerald-500' : isCurrent ? 'bg-gradient-to-r from-emerald-500 to-cyan-400' : 'bg-slate-800'
+                    isDone 
+                      ? 'bg-[#D98324]' 
+                      : isCurrent 
+                        ? 'bg-gradient-to-r from-[#D98324] to-[#EFDCAB]' 
+                        : 'bg-[#443627]'
                   }`}
                 />
                 <div className="mt-1.5 text-[10px] font-mono tracking-tight truncate">
-                  <span className={isCurrent ? 'text-emerald-400 font-semibold' : isDone ? 'text-slate-300' : 'text-slate-500'}>
+                  <span className={isCurrent ? 'text-[#D98324] font-bold' : isDone ? 'text-[#EFDCAB]' : 'text-[#443627]'}>
                     {s.label}
                   </span>
                 </div>
@@ -179,7 +183,7 @@ export default function SignupWizard({ formData, setFormData, onSwitchToLogin })
 
       {/* Error Banner */}
       {errorMsg && (
-        <div className="mb-4 p-3 rounded-xl bg-red-950/40 border border-red-500/40 flex items-center space-x-2 text-red-300 text-xs animate-shake">
+        <div className="mb-4 p-3 rounded-xl bg-red-950/60 border border-red-500/50 flex items-center space-x-2 text-red-200 text-xs animate-shake">
           <AlertTriangle className="h-4 w-4 shrink-0 text-red-400" />
           <span>{errorMsg}</span>
         </div>
@@ -191,7 +195,7 @@ export default function SignupWizard({ formData, setFormData, onSwitchToLogin })
         {currentStep === 1 && (
           <div className="space-y-3.5 animate-fadeIn">
             <div>
-              <label className="block text-xs font-mono text-slate-300 uppercase tracking-wider mb-1">
+              <label className="block text-xs font-mono text-[#EFDCAB] uppercase tracking-wider mb-1">
                 Full Legal Name (As per PAN / Aadhaar) *
               </label>
               <div className="relative">
@@ -201,9 +205,9 @@ export default function SignupWizard({ formData, setFormData, onSwitchToLogin })
                   value={formData.name}
                   onChange={(e) => handleChange('name', e.target.value)}
                   placeholder="e.g. Utkarsh Singh"
-                  className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-900/90 border border-white/10 text-slate-100 placeholder-slate-500 text-sm focus:outline-none focus:border-emerald-500 font-medium"
+                  className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-[#1C1510] border border-[#443627] text-[#F2F6D0] placeholder-[#EFDCAB]/40 text-sm focus:outline-none focus:border-[#D98324] font-medium"
                 />
-                <User className="absolute left-3.5 top-3 h-4 w-4 text-slate-500" />
+                <User className="absolute left-3.5 top-3 h-4 w-4 text-[#EFDCAB]/60" />
               </div>
             </div>
 
@@ -211,11 +215,11 @@ export default function SignupWizard({ formData, setFormData, onSwitchToLogin })
               {/* PAN Number */}
               <div>
                 <div className="flex items-center justify-between mb-1">
-                  <label className="block text-xs font-mono text-slate-300 uppercase tracking-wider">
+                  <label className="block text-xs font-mono text-[#EFDCAB] uppercase tracking-wider">
                     PAN Number *
                   </label>
                   {isPanValid && (
-                    <span className="text-[10px] font-mono text-emerald-400 flex items-center space-x-0.5">
+                    <span className="text-[10px] font-mono text-[#D98324] flex items-center space-x-0.5">
                       <Check className="h-3 w-3" />
                       <span>Valid</span>
                     </span>
@@ -229,17 +233,17 @@ export default function SignupWizard({ formData, setFormData, onSwitchToLogin })
                     value={formData.pan}
                     onChange={handlePanChange}
                     placeholder="ABCDE1234F"
-                    className={`w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-900/90 border text-slate-100 placeholder-slate-500 text-sm focus:outline-none font-mono uppercase ${
-                      isPanValid ? 'border-emerald-500/60 ring-1 ring-emerald-500/30' : 'border-white/10 focus:border-cyan-500'
+                    className={`w-full pl-10 pr-4 py-2.5 rounded-xl bg-[#1C1510] border text-[#F2F6D0] placeholder-[#EFDCAB]/40 text-sm focus:outline-none font-mono uppercase ${
+                      isPanValid ? 'border-[#D98324] ring-1 ring-[#D98324]/40' : 'border-[#443627] focus:border-[#D98324]'
                     }`}
                   />
-                  <CreditCard className="absolute left-3.5 top-3 h-4 w-4 text-slate-500" />
+                  <CreditCard className="absolute left-3.5 top-3 h-4 w-4 text-[#EFDCAB]/60" />
                 </div>
               </div>
 
               {/* Official Email */}
               <div>
-                <label className="block text-xs font-mono text-slate-300 uppercase tracking-wider mb-1">
+                <label className="block text-xs font-mono text-[#EFDCAB] uppercase tracking-wider mb-1">
                   Official Email *
                 </label>
                 <div className="relative">
@@ -249,20 +253,20 @@ export default function SignupWizard({ formData, setFormData, onSwitchToLogin })
                     value={formData.email}
                     onChange={(e) => handleChange('email', e.target.value)}
                     placeholder="name@company.com"
-                    className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-900/90 border border-white/10 text-slate-100 placeholder-slate-500 text-sm focus:outline-none focus:border-emerald-500"
+                    className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-[#1C1510] border border-[#443627] text-[#F2F6D0] placeholder-[#EFDCAB]/40 text-sm focus:outline-none focus:border-[#D98324]"
                   />
-                  <Mail className="absolute left-3.5 top-3 h-4 w-4 text-slate-500" />
+                  <Mail className="absolute left-3.5 top-3 h-4 w-4 text-[#EFDCAB]/60" />
                 </div>
               </div>
             </div>
 
             {/* Mobile & 2FA Aadhaar OTP Simulation */}
-            <div className="p-3.5 rounded-xl bg-slate-900/70 border border-white/10 space-y-2.5">
+            <div className="p-3.5 rounded-xl bg-[#1C1510]/90 border border-[#443627] space-y-2.5">
               <div className="flex items-center justify-between">
-                <label className="block text-xs font-mono text-slate-300 uppercase tracking-wider">
+                <label className="block text-xs font-mono text-[#EFDCAB] uppercase tracking-wider">
                   Aadhaar-Linked Mobile (+91) *
                 </label>
-                <span className="text-[10px] font-mono text-emerald-400">RBI 2FA MANDATE</span>
+                <span className="text-[10px] font-mono text-[#D98324]">RBI 2FA MANDATE</span>
               </div>
 
               <div className="flex space-x-2">
@@ -274,21 +278,21 @@ export default function SignupWizard({ formData, setFormData, onSwitchToLogin })
                     value={formData.phone}
                     onChange={(e) => handleChange('phone', e.target.value)}
                     placeholder="9876543210"
-                    className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-950 border border-white/10 text-slate-100 placeholder-slate-600 text-sm focus:outline-none focus:border-emerald-500 font-mono"
+                    className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-[#120E0A] border border-[#443627] text-[#F2F6D0] placeholder-[#EFDCAB]/40 text-sm focus:outline-none focus:border-[#D98324] font-mono"
                   />
-                  <Phone className="absolute left-3.5 top-3 h-4 w-4 text-slate-500" />
+                  <Phone className="absolute left-3.5 top-3 h-4 w-4 text-[#EFDCAB]/60" />
                 </div>
 
                 {!otpVerified ? (
                   <button
                     type="button"
                     onClick={handleSendOtp}
-                    className="px-3.5 py-2.5 rounded-xl bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/40 text-xs font-mono font-semibold transition"
+                    className="px-3.5 py-2.5 rounded-xl bg-[#D98324]/20 hover:bg-[#D98324]/30 text-[#EFDCAB] border border-[#D98324]/50 text-xs font-mono font-semibold transition"
                   >
                     {otpSent ? 'Resend OTP' : 'Send OTP'}
                   </button>
                 ) : (
-                  <div className="px-3.5 py-2.5 rounded-xl bg-emerald-950/80 text-emerald-400 border border-emerald-500/50 text-xs font-mono font-semibold flex items-center space-x-1">
+                  <div className="px-3.5 py-2.5 rounded-xl bg-[#443627]/80 text-[#D98324] border border-[#D98324]/50 text-xs font-mono font-semibold flex items-center space-x-1">
                     <CheckCircle2 className="h-4 w-4" />
                     <span>Verified</span>
                   </div>
@@ -296,23 +300,23 @@ export default function SignupWizard({ formData, setFormData, onSwitchToLogin })
               </div>
 
               {otpSent && !otpVerified && (
-                <div className="mt-2 pt-2 border-t border-white/5 flex items-center space-x-2">
+                <div className="mt-2 pt-2 border-t border-[#443627] flex items-center space-x-2">
                   <input
                     type="text"
                     maxLength={6}
                     value={enteredOtp}
                     onChange={(e) => setEnteredOtp(e.target.value)}
                     placeholder="Enter OTP (749201)"
-                    className="w-36 px-3 py-1.5 rounded-lg bg-slate-950 border border-cyan-500/50 text-cyan-300 text-xs font-mono tracking-widest text-center"
+                    className="w-36 px-3 py-1.5 rounded-lg bg-[#120E0A] border border-[#D98324]/60 text-[#EFDCAB] text-xs font-mono tracking-widest text-center"
                   />
                   <button
                     type="button"
                     onClick={handleVerifyOtp}
-                    className="px-3 py-1.5 rounded-lg bg-cyan-500 text-slate-950 font-semibold text-xs hover:bg-cyan-400 transition"
+                    className="px-3 py-1.5 rounded-lg bg-[#D98324] text-[#120E0A] font-bold text-xs hover:bg-[#c2731b] transition"
                   >
                     Verify OTP
                   </button>
-                  <span className="text-[10px] text-slate-400 font-mono">Demo: 749201</span>
+                  <span className="text-[10px] text-[#EFDCAB]/70 font-mono">Demo: 749201</span>
                 </div>
               )}
             </div>
@@ -325,7 +329,7 @@ export default function SignupWizard({ formData, setFormData, onSwitchToLogin })
             <div className="grid grid-cols-2 gap-3">
               {/* Age */}
               <div>
-                <label className="block text-xs font-mono text-slate-300 uppercase tracking-wider mb-1">
+                <label className="block text-xs font-mono text-[#EFDCAB] uppercase tracking-wider mb-1">
                   Age (Min 18 for KYC) *
                 </label>
                 <input
@@ -335,19 +339,19 @@ export default function SignupWizard({ formData, setFormData, onSwitchToLogin })
                   required
                   value={formData.age}
                   onChange={(e) => handleChange('age', e.target.value)}
-                  className="w-full px-4 py-2.5 rounded-xl bg-slate-900/90 border border-white/10 text-slate-100 text-sm focus:outline-none focus:border-emerald-500 font-mono"
+                  className="w-full px-4 py-2.5 rounded-xl bg-[#1C1510] border border-[#443627] text-[#F2F6D0] text-sm focus:outline-none focus:border-[#D98324] font-mono"
                 />
               </div>
 
-              {/* City Type (Crucial for HRA Section 10(13A)) */}
+              {/* City Type (HRA Regime) */}
               <div>
-                <label className="block text-xs font-mono text-slate-300 uppercase tracking-wider mb-1">
+                <label className="block text-xs font-mono text-[#EFDCAB] uppercase tracking-wider mb-1">
                   City (Tax HRA Regime) *
                 </label>
                 <select
                   value={formData.city_type}
                   onChange={(e) => handleChange('city_type', e.target.value)}
-                  className="w-full px-3 py-2.5 rounded-xl bg-slate-900/90 border border-white/10 text-slate-100 text-sm focus:outline-none focus:border-emerald-500"
+                  className="w-full px-3 py-2.5 rounded-xl bg-[#1C1510] border border-[#443627] text-[#F2F6D0] text-sm focus:outline-none focus:border-[#D98324]"
                 >
                   <option value="metro">Metro (Delhi/Mumbai/BLR/Kolkata/CHN - 50% HRA)</option>
                   <option value="tier1">Tier 1 / Non-Metro (40% HRA)</option>
@@ -358,10 +362,10 @@ export default function SignupWizard({ formData, setFormData, onSwitchToLogin })
             {/* Annual CTC / Salary */}
             <div>
               <div className="flex items-center justify-between mb-1">
-                <label className="block text-xs font-mono text-slate-300 uppercase tracking-wider">
+                <label className="block text-xs font-mono text-[#EFDCAB] uppercase tracking-wider">
                   Annual Gross CTC / Income (₹) *
                 </label>
-                <span className="text-xs font-mono text-emerald-400 font-semibold">
+                <span className="text-xs font-mono text-[#D98324] font-semibold">
                   ₹{(Number(formData.annual_salary || 0) / 100000).toFixed(1)} Lakhs / year
                 </span>
               </div>
@@ -372,17 +376,17 @@ export default function SignupWizard({ formData, setFormData, onSwitchToLogin })
                 value={formData.annual_salary}
                 onChange={(e) => handleChange('annual_salary', e.target.value)}
                 placeholder="2400000"
-                className="w-full px-4 py-2.5 rounded-xl bg-slate-900/90 border border-white/10 text-slate-100 text-sm focus:outline-none focus:border-emerald-500 font-mono"
+                className="w-full px-4 py-2.5 rounded-xl bg-[#1C1510] border border-[#443627] text-[#F2F6D0] text-sm focus:outline-none focus:border-[#D98324] font-mono"
               />
             </div>
 
             {/* Monthly Living Expenses */}
             <div>
               <div className="flex items-center justify-between mb-1">
-                <label className="block text-xs font-mono text-slate-300 uppercase tracking-wider">
+                <label className="block text-xs font-mono text-[#EFDCAB] uppercase tracking-wider">
                   Monthly Fixed Living Expenses (₹) *
                 </label>
-                <span className="text-xs font-mono text-cyan-400 font-semibold">
+                <span className="text-xs font-mono text-[#EFDCAB] font-semibold">
                   ₹{Number(formData.monthly_expenses || 0).toLocaleString('en-IN')} / month
                 </span>
               </div>
@@ -393,9 +397,9 @@ export default function SignupWizard({ formData, setFormData, onSwitchToLogin })
                 value={formData.monthly_expenses}
                 onChange={(e) => handleChange('monthly_expenses', e.target.value)}
                 placeholder="65000"
-                className="w-full px-4 py-2.5 rounded-xl bg-slate-900/90 border border-white/10 text-slate-100 text-sm focus:outline-none focus:border-emerald-500 font-mono"
+                className="w-full px-4 py-2.5 rounded-xl bg-[#1C1510] border border-[#443627] text-[#F2F6D0] text-sm focus:outline-none focus:border-[#D98324] font-mono"
               />
-              <p className="text-[11px] text-slate-400 mt-1">
+              <p className="text-[11px] text-[#EFDCAB]/70 mt-1">
                 Used deterministically to calculate your 25x–30x FIRE freedom retirement corpus.
               </p>
             </div>
@@ -405,14 +409,14 @@ export default function SignupWizard({ formData, setFormData, onSwitchToLogin })
         {/* STEP 3: EXISTING WEALTH BASELINE */}
         {currentStep === 3 && (
           <div className="space-y-3.5 animate-fadeIn">
-            <div className="p-3 rounded-xl bg-cyan-950/20 border border-cyan-500/30 text-xs text-cyan-300">
+            <div className="p-3 rounded-xl bg-[#443627]/40 border border-[#D98324]/40 text-xs text-[#EFDCAB]">
               💡 <strong>Instant Baseline:</strong> You can upload your official CAS PDF statement anytime later in the Portfolio tab. Enter your current estimates below:
             </div>
 
             <div className="grid grid-cols-2 gap-3">
               {/* Mutual Funds Valuation */}
               <div>
-                <label className="block text-xs font-mono text-slate-300 uppercase tracking-wider mb-1">
+                <label className="block text-xs font-mono text-[#EFDCAB] uppercase tracking-wider mb-1">
                   Existing Mutual Funds (₹)
                 </label>
                 <input
@@ -421,13 +425,13 @@ export default function SignupWizard({ formData, setFormData, onSwitchToLogin })
                   value={formData.existing_mf}
                   onChange={(e) => handleChange('existing_mf', e.target.value)}
                   placeholder="950000"
-                  className="w-full px-3 py-2.5 rounded-xl bg-slate-900/90 border border-white/10 text-slate-100 text-sm focus:outline-none focus:border-emerald-500 font-mono"
+                  className="w-full px-3 py-2.5 rounded-xl bg-[#1C1510] border border-[#443627] text-[#F2F6D0] text-sm focus:outline-none focus:border-[#D98324] font-mono"
                 />
               </div>
 
               {/* Monthly SIP */}
               <div>
-                <label className="block text-xs font-mono text-slate-300 uppercase tracking-wider mb-1">
+                <label className="block text-xs font-mono text-[#EFDCAB] uppercase tracking-wider mb-1">
                   Active Monthly SIP (₹)
                 </label>
                 <input
@@ -436,7 +440,7 @@ export default function SignupWizard({ formData, setFormData, onSwitchToLogin })
                   value={formData.monthly_sip}
                   onChange={(e) => handleChange('monthly_sip', e.target.value)}
                   placeholder="45000"
-                  className="w-full px-3 py-2.5 rounded-xl bg-slate-900/90 border border-white/10 text-slate-100 text-sm focus:outline-none focus:border-emerald-500 font-mono"
+                  className="w-full px-3 py-2.5 rounded-xl bg-[#1C1510] border border-[#443627] text-[#F2F6D0] text-sm focus:outline-none focus:border-[#D98324] font-mono"
                 />
               </div>
             </div>
@@ -444,7 +448,7 @@ export default function SignupWizard({ formData, setFormData, onSwitchToLogin })
             <div className="grid grid-cols-2 gap-3">
               {/* EPF & PPF Balance */}
               <div>
-                <label className="block text-xs font-mono text-slate-300 uppercase tracking-wider mb-1">
+                <label className="block text-xs font-mono text-[#EFDCAB] uppercase tracking-wider mb-1">
                   EPF + PPF Balance (₹)
                 </label>
                 <input
@@ -453,13 +457,13 @@ export default function SignupWizard({ formData, setFormData, onSwitchToLogin })
                   value={formData.existing_epf}
                   onChange={(e) => handleChange('existing_epf', e.target.value)}
                   placeholder="440000"
-                  className="w-full px-3 py-2.5 rounded-xl bg-slate-900/90 border border-white/10 text-slate-100 text-sm focus:outline-none focus:border-emerald-500 font-mono"
+                  className="w-full px-3 py-2.5 rounded-xl bg-[#1C1510] border border-[#443627] text-[#F2F6D0] text-sm focus:outline-none focus:border-[#D98324] font-mono"
                 />
               </div>
 
               {/* Direct Stocks */}
               <div>
-                <label className="block text-xs font-mono text-slate-300 uppercase tracking-wider mb-1">
+                <label className="block text-xs font-mono text-[#EFDCAB] uppercase tracking-wider mb-1">
                   Direct Stocks (₹)
                 </label>
                 <input
@@ -468,7 +472,7 @@ export default function SignupWizard({ formData, setFormData, onSwitchToLogin })
                   value={formData.existing_stocks}
                   onChange={(e) => handleChange('existing_stocks', e.target.value)}
                   placeholder="60000"
-                  className="w-full px-3 py-2.5 rounded-xl bg-slate-900/90 border border-white/10 text-slate-100 text-sm focus:outline-none focus:border-emerald-500 font-mono"
+                  className="w-full px-3 py-2.5 rounded-xl bg-[#1C1510] border border-[#443627] text-[#F2F6D0] text-sm focus:outline-none focus:border-[#D98324] font-mono"
                 />
               </div>
             </div>
@@ -479,19 +483,19 @@ export default function SignupWizard({ formData, setFormData, onSwitchToLogin })
         {currentStep === 4 && (
           <div className="space-y-4 animate-fadeIn">
             {/* Panic Threshold Slider */}
-            <div className="p-4 rounded-xl bg-slate-900/80 border border-white/10 space-y-2">
+            <div className="p-4 rounded-xl bg-[#1C1510] border border-[#443627] space-y-2">
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-2">
-                  <AlertTriangle className="h-4 w-4 text-amber-400" />
-                  <span className="text-xs font-mono text-slate-200 uppercase font-semibold">
+                  <AlertTriangle className="h-4 w-4 text-[#D98324]" />
+                  <span className="text-xs font-mono text-[#EFDCAB] uppercase font-semibold">
                     Panic Drawdown Trigger Point
                   </span>
                 </div>
-                <span className="text-sm font-mono font-bold text-amber-400 px-2 py-0.5 rounded bg-amber-950/60 border border-amber-500/30">
+                <span className="text-sm font-mono font-bold text-[#D98324] px-2 py-0.5 rounded bg-[#443627]/80 border border-[#D98324]/40">
                   {formData.panic_threshold}%
                 </span>
               </div>
-              <p className="text-[11px] text-slate-400">
+              <p className="text-[11px] text-[#EFDCAB]/80">
                 If the market drops by this threshold, Sthira will immediately initiate an autonomous WhatsApp intervention to prevent panic-selling.
               </p>
               <input
@@ -501,9 +505,9 @@ export default function SignupWizard({ formData, setFormData, onSwitchToLogin })
                 step="1"
                 value={formData.panic_threshold}
                 onChange={(e) => handleChange('panic_threshold', e.target.value)}
-                className="w-full accent-amber-500 cursor-pointer"
+                className="w-full accent-[#D98324] cursor-pointer"
               />
-              <div className="flex justify-between text-[10px] font-mono text-slate-500">
+              <div className="flex justify-between text-[10px] font-mono text-[#EFDCAB]/60">
                 <span>-5% (Sensitive)</span>
                 <span>-15% (Balanced)</span>
                 <span>-25% (High Stoic)</span>
@@ -512,13 +516,13 @@ export default function SignupWizard({ formData, setFormData, onSwitchToLogin })
 
             {/* Primary Goal */}
             <div>
-              <label className="block text-xs font-mono text-slate-300 uppercase tracking-wider mb-1">
+              <label className="block text-xs font-mono text-[#EFDCAB] uppercase tracking-wider mb-1">
                 Primary Wealth Goal *
               </label>
               <select
                 value={formData.wealth_goal}
                 onChange={(e) => handleChange('wealth_goal', e.target.value)}
-                className="w-full px-3 py-2.5 rounded-xl bg-slate-900/90 border border-white/10 text-slate-100 text-sm focus:outline-none focus:border-emerald-500"
+                className="w-full px-3 py-2.5 rounded-xl bg-[#1C1510] border border-[#443627] text-[#F2F6D0] text-sm focus:outline-none focus:border-[#D98324]"
               >
                 <option value="FIRE Early Retirement (Age 42)">FIRE Early Retirement (Target Age 40–45)</option>
                 <option value="Aggressive Wealth Compounding">Aggressive Wealth Compounding (Alpha Focus)</option>
@@ -527,8 +531,8 @@ export default function SignupWizard({ formData, setFormData, onSwitchToLogin })
             </div>
 
             {/* Regulatory Mandatory Consents */}
-            <div className="p-3.5 rounded-xl bg-slate-900/60 border border-white/5 space-y-2.5">
-              <div className="text-[11px] font-mono text-slate-400 uppercase tracking-wider">
+            <div className="p-3.5 rounded-xl bg-[#1C1510]/80 border border-[#443627] space-y-2.5">
+              <div className="text-[11px] font-mono text-[#EFDCAB]/70 uppercase tracking-wider">
                 Statutory Consents & Disclosures (SEBI & RBI)
               </div>
 
@@ -538,9 +542,9 @@ export default function SignupWizard({ formData, setFormData, onSwitchToLogin })
                   required
                   checked={formData.consent_cas}
                   onChange={(e) => handleChange('consent_cas', e.target.checked)}
-                  className="mt-0.5 w-4 h-4 rounded text-emerald-600 focus:ring-emerald-500 border-slate-700 bg-slate-800"
+                  className="mt-0.5 w-4 h-4 rounded accent-[#D98324]"
                 />
-                <span className="text-xs text-slate-300 leading-relaxed">
+                <span className="text-xs text-[#EFDCAB]/90 leading-relaxed">
                   I authorize Sthira to fetch and analyze my mutual fund and tax records in accordance with SEBI Regulations and PMLA 2002.
                 </span>
               </label>
@@ -551,9 +555,9 @@ export default function SignupWizard({ formData, setFormData, onSwitchToLogin })
                   required
                   checked={formData.consent_behavioral}
                   onChange={(e) => handleChange('consent_behavioral', e.target.checked)}
-                  className="mt-0.5 w-4 h-4 rounded text-emerald-600 focus:ring-emerald-500 border-slate-700 bg-slate-800"
+                  className="mt-0.5 w-4 h-4 rounded accent-[#D98324]"
                 />
-                <span className="text-xs text-slate-300 leading-relaxed">
+                <span className="text-xs text-[#EFDCAB]/90 leading-relaxed">
                   I consent to autonomous behavioral monitoring and WhatsApp crisis interventions during severe market pullbacks.
                 </span>
               </label>
@@ -564,9 +568,9 @@ export default function SignupWizard({ formData, setFormData, onSwitchToLogin })
                   required
                   checked={formData.consent_terms}
                   onChange={(e) => handleChange('consent_terms', e.target.checked)}
-                  className="mt-0.5 w-4 h-4 rounded text-emerald-600 focus:ring-emerald-500 border-slate-700 bg-slate-800"
+                  className="mt-0.5 w-4 h-4 rounded accent-[#D98324]"
                 />
-                <span className="text-xs text-slate-300 leading-relaxed">
+                <span className="text-xs text-[#EFDCAB]/90 leading-relaxed">
                   I acknowledge that all calculations are deterministic, verified against SEBI IA standards, and stored under RBI Data Localization directives.
                 </span>
               </label>
@@ -580,7 +584,7 @@ export default function SignupWizard({ formData, setFormData, onSwitchToLogin })
             <button
               type="button"
               onClick={handleBack}
-              className="py-3 px-4 rounded-xl bg-slate-900 hover:bg-slate-800 border border-white/10 text-slate-300 font-semibold text-xs flex items-center space-x-1 transition"
+              className="py-3 px-4 rounded-xl bg-[#1C1510] hover:bg-[#271E16] border border-[#443627] text-[#EFDCAB] font-semibold text-xs flex items-center space-x-1 transition"
             >
               <ArrowLeft className="h-4 w-4" />
               <span>Back</span>
@@ -591,7 +595,7 @@ export default function SignupWizard({ formData, setFormData, onSwitchToLogin })
             <button
               type="button"
               onClick={handleNext}
-              className="flex-1 py-3 px-4 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-slate-950 font-semibold text-sm flex items-center justify-center space-x-2 shadow-lg shadow-emerald-500/20 transition cursor-pointer"
+              className="flex-1 py-3 px-4 rounded-xl bg-gradient-to-r from-[#D98324] via-[#e5943b] to-[#EFDCAB] hover:brightness-105 text-[#271E16] font-bold text-sm flex items-center justify-center space-x-2 shadow-lg shadow-[#D98324]/20 transition cursor-pointer"
             >
               <span>Continue to {STEPS[currentStep].label}</span>
               <ArrowRight className="h-4 w-4" />
@@ -600,7 +604,7 @@ export default function SignupWizard({ formData, setFormData, onSwitchToLogin })
             <button
               type="submit"
               disabled={isLoading}
-              className="flex-1 py-3 px-4 rounded-xl bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 hover:opacity-95 text-slate-950 font-bold text-sm flex items-center justify-center space-x-2 shadow-xl shadow-emerald-500/25 transition cursor-pointer disabled:opacity-50"
+              className="flex-1 py-3 px-4 rounded-xl bg-gradient-to-r from-[#D98324] via-[#EFDCAB] to-[#D98324] hover:brightness-105 text-[#271E16] font-extrabold text-sm flex items-center justify-center space-x-2 shadow-xl shadow-[#D98324]/25 transition cursor-pointer disabled:opacity-50"
             >
               <span>{isLoading ? 'Creating RBI Vault Account...' : 'Open Sthira Vault Account →'}</span>
               <Sparkles className="h-4 w-4" />

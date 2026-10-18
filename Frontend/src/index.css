@@ -2,71 +2,77 @@
 
 @layer base {
   :root {
-    --bg-primary: #080B11;
-    --bg-card: #0E131F;
-    --bg-card-subtle: #111726;
-    --border-subtle: rgba(255, 255, 255, 0.08);
-    --border-accent: rgba(16, 185, 129, 0.3);
-    --emerald-primary: #10B981;
-    --cyan-accent: #06B6D4;
+    /* User's Exact 4 Swatch Colors */
+    --color-dark: #443627;      /* rgb(68, 54, 39) */
+    --color-primary: #D98324;   /* rgb(217, 131, 36) */
+    --color-accent: #EFDCAB;    /* rgb(239, 220, 171) */
+    --color-light: #F2F6D0;     /* rgb(242, 246, 208) */
+
+    /* Luxury Theme Tokens */
+    --bg-primary: #120E0A;
+    --bg-card: #1C1510;
+    --bg-card-subtle: #271E16;
+    --border-subtle: rgba(239, 220, 171, 0.12);
+    --border-accent: rgba(217, 131, 36, 0.4);
+    
     --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
     --font-mono: 'JetBrains Mono', monospace;
   }
 
   body {
     background-color: var(--bg-primary);
-    color: #F1F5F9;
+    color: var(--color-light);
     font-family: var(--font-sans);
     min-height: 100vh;
     overflow-x: hidden;
   }
 
-  /* Custom institutional scrollbar */
+  /* Custom luxury warm scrollbar */
   ::-webkit-scrollbar {
     width: 6px;
     height: 6px;
   }
   ::-webkit-scrollbar-track {
-    background: #080B11;
+    background: #120E0A;
   }
   ::-webkit-scrollbar-thumb {
-    background: #1E293B;
+    background: #443627;
     border-radius: 3px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: #334155;
+    background: #D98324;
   }
 }
 
-/* Institutional grid pattern */
+/* Warm luxury grid texture */
 .bg-grid-subtle {
   background-size: 32px 32px;
   background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    linear-gradient(to right, rgba(239, 220, 171, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(239, 220, 171, 0.04) 1px, transparent 1px);
 }
 
 .bg-radial-gradient {
-  background: radial-gradient(circle at 50% 0%, rgba(16, 185, 129, 0.08) 0%, transparent 70%);
+  background: radial-gradient(circle at 50% 0%, rgba(217, 131, 36, 0.14) 0%, transparent 70%);
 }
 
 .glass-panel {
-  background: rgba(14, 19, 31, 0.85);
+  background: rgba(28, 21, 16, 0.88);
   backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(239, 220, 171, 0.12);
 }
 
 .glass-card {
-  background: linear-gradient(135deg, rgba(17, 23, 38, 0.9) 0%, rgba(14, 19, 31, 0.7) 100%);
+  background: linear-gradient(135deg, rgba(39, 30, 22, 0.9) 0%, rgba(28, 21, 16, 0.8) 100%);
   backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(239, 220, 171, 0.12);
 }
 
 .glass-card-interactive {
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .glass-card-interactive:hover {
-  border-color: rgba(16, 185, 129, 0.4);
+  border-color: rgba(217, 131, 36, 0.5);
   transform: translateY(-2px);
-  box-shadow: 0 12px 32px -8px rgba(16, 185, 129, 0.12);
+  box-shadow: 0 12px 32px -8px rgba(217, 131, 36, 0.2);
 }
