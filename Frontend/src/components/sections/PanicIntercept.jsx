@@ -116,7 +116,7 @@ export default function PanicIntercept() {
                       <MessageCircle className="w-3.5 h-3.5 text-white" />
                     </div>
                     <div>
-                      <p className="text-xs font-semibold text-green-400">AstraGuard Alert</p>
+                      <p className="text-xs font-semibold text-green-400">Sthira Alert</p>
                       <p className="text-[10px] text-text-slate">via WhatsApp • now</p>
                     </div>
                     <Bell className="w-3.5 h-3.5 text-green-400 ml-auto" />
@@ -155,7 +155,7 @@ export default function PanicIntercept() {
               <span className="text-accent-gold font-serif italic">the Panic.</span>
             </h2>
             <p className="text-text-slate text-lg leading-relaxed">
-              When markets crash, 128% of SIPs get stopped. AstraGuard doesn't send generic
+              When markets crash, 128% of SIPs get stopped. Sthira doesn't send generic
               "stay calm" messages. It calculates{' '}
               <span className="text-white font-semibold">your exact personal consequence</span>
               {' '}and delivers it to your WhatsApp before you make the mistake.

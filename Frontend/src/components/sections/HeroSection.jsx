@@ -1,179 +1,186 @@
-import { useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
-import { motion } from "motion/react";
-import Hls from "hls.js";
-import { ArrowRight, Play } from "lucide-react";
+import { Link } from 'react-router-dom'
+import { ShieldCheck, ArrowRight, Sparkles, IndianRupee, Flame, Scale, ShieldAlert, CheckCircle2 } from 'lucide-react'
+import { isAuthenticated } from '../../services/session'
 
 export default function HeroSection() {
-  const videoRef = useRef(null);
-  const videoSrc =
-    "https://stream.mux.com/T6oQJQ02cQ6N01TR6iHwZkKFkbepS34dkkIc9iukgy400g.m3u8";
-
-  useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-
-    if (Hls.isSupported()) {
-      const hls = new Hls();
-      hls.loadSource(videoSrc);
-      hls.attachMedia(video);
-      hls.on(Hls.Events.MANIFEST_PARSED, () => {
-        video.play().catch((e) => console.log("Auto-play prevented:", e));
-      });
-      return () => {
-        hls.destroy();
-      };
-    } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
-      video.src = videoSrc;
-      video.addEventListener("loadedmetadata", () => {
-        video.play().catch((e) => console.log("Auto-play prevented:", e));
-      });
-    }
-  }, []);
+  const scrollToPlayground = () => {
+    document.getElementById('interactive-playground')?.scrollIntoView({ behavior: 'smooth' })
+  }
 
   return (
-    <section className="relative w-full h-screen bg-black text-white overflow-hidden flex items-center justify-center">
-      {/* ── Background Video ── */}
-      <div className="absolute inset-0 z-0">
-        <video
-          ref={videoRef}
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover opacity-50"
-          poster="https://images.unsplash.com/photo-1647356191320-d7a1f80ca777?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhYnN0cmFjdCUyMGRhcmslMjB0ZWNobm9sb2d5JTIwbmV1cmFsJTIwbmV0d29ya3xlbnwxfHx8fDE3Njg5NzIyNTV8MA&ixlib=rb-4.1.0&q=80&w=1080"
-        />
-      </div>
+    <section className="relative overflow-hidden pt-8 pb-16 sm:pt-10 sm:pb-24">
+      {/* Background ambient lighting (grounded, institutional) */}
+      <div className="absolute top-1/4 left-1/4 w-[600px] h-[350px] bg-emerald-500/[0.03] blur-[150px] pointer-events-none rounded-full" />
+      <div className="absolute top-1/3 right-1/4 w-[500px] h-[300px] bg-blue-500/[0.02] blur-[140px] pointer-events-none rounded-full" />
 
-      {/* ── Video overlay ── */}
-      <div className="absolute inset-0 z-[1] bg-black/60 backdrop-blur-[2px]" />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+          
+          {/* Left Column: Core Value Narrative */}
+          <div className="lg:col-span-7 flex flex-col gap-6 text-left">
+            {/* Top pill badge */}
+            <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 w-fit mt-1">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+              <span className="text-xs font-semibold text-emerald-400 tracking-wide">
+                Autonomous Behavioral Wealth OS • 10 Multi-Agents
+              </span>
+            </div>
 
-      {/* ── Decorative gradients ── */}
-      <div
-        className="absolute z-[2] rounded-full mix-blend-screen pointer-events-none"
-        style={{
-          top: "-20%",
-          left: "20%",
-          width: 600,
-          height: 600,
-          background: "rgba(30,58,138,0.2)",
-          filter: "blur(120px)",
-        }}
-      />
-      <div
-        className="absolute z-[2] rounded-full mix-blend-screen pointer-events-none"
-        style={{
-          bottom: "-10%",
-          right: "20%",
-          width: 500,
-          height: 500,
-          background: "rgba(49,46,129,0.2)",
-          filter: "blur(120px)",
-        }}
-      />
+            {/* Main Headline */}
+            <h1 className="text-4xl sm:text-5xl lg:text-[52px] font-extrabold tracking-tight text-white leading-[1.15]">
+              Financial Intelligence Built to{' '}
+              <span className="bg-gradient-to-r from-emerald-400 via-teal-300 to-emerald-200 bg-clip-text text-transparent">
+                Prevent Costly Mistakes.
+              </span>
+            </h1>
 
-      {/* ── Bottom fade for transition to next section ── */}
-      <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-void to-transparent z-[3] pointer-events-none" />
+            {/* Subtitle */}
+            <p className="text-slate-300 text-base sm:text-lg leading-relaxed max-w-2xl font-normal">
+              Most financial tools only show numbers after mistakes are locked in. Sthira binds your Form 16 and mutual funds to <strong className="text-white font-medium">deterministic Python math engines</strong> guarded by <strong className="text-white font-medium">10 LangGraph agents</strong> — catching tax leaks, optimizing retirement, and intervening before you panic-sell in a crash.
+            </p>
 
-      {/* ── Content ── */}
-      <div className="relative z-10 w-full flex flex-col items-center text-center mx-auto max-w-5xl px-6 space-y-8">
-        {/* Badge */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-        >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/20 backdrop-blur-sm bg-white/5">
-            <span className="w-2 h-2 rounded-full bg-[#061745] animate-pulse" />
-            <span
-              className="text-sm text-text-slate font-medium tracking-wide"
-              style={{ fontFamily: "'Instrument Sans', sans-serif" }}
-            >
-              Behavioral Guard v1.0
-            </span>
+            {/* Strict Architecture Principle Banner */}
+            <div className="p-4 rounded-xl bg-white/[0.03] border border-white/[0.08] flex items-start gap-3 max-w-xl">
+              <ShieldCheck className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" />
+              <div className="text-xs sm:text-sm text-slate-300 leading-normal">
+                <span className="text-white font-semibold block mb-0.5">Strict Architecture Principle</span>
+                Deterministic code performs 100% of the financial math. LLMs only narrate and intervene. Zero hallucinations.
+              </div>
+            </div>
+
+            {/* Action CTAs */}
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 pt-1">
+              {!isAuthenticated() ? (
+                <Link
+                  to="/signup"
+                  className="px-6 py-3.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-[#090D16] font-bold text-sm flex items-center justify-center gap-2 transition-all shadow-lg shadow-emerald-500/20 cursor-pointer"
+                >
+                  <Sparkles className="w-4 h-4" />
+                  <span>Start One-Time Intake (Sign Up)</span>
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+              ) : (
+                <Link
+                  to="/dashboard"
+                  className="px-6 py-3.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-[#090D16] font-bold text-sm flex items-center justify-center gap-2 transition-all shadow-lg shadow-emerald-500/20 cursor-pointer"
+                >
+                  <span>Explore Full Dashboard</span>
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+              )}
+
+              <button
+                type="button"
+                onClick={scrollToPlayground}
+                className="px-6 py-3.5 rounded-xl bg-[#111622] hover:bg-[#161D2C] text-white font-semibold text-sm border border-white/10 hover:border-white/20 transition-all flex items-center justify-center gap-2 cursor-pointer"
+              >
+                <span>Test Live Playground</span>
+              </button>
+
+              <Link
+                to="/onboard"
+                className="px-5 py-3.5 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] text-slate-300 hover:text-white font-medium text-sm border border-white/[0.08] transition-all flex items-center justify-center"
+              >
+                <span>Upload Form 16 / CAS</span>
+              </Link>
+            </div>
+
+            {/* Architecture Assurance Bar */}
+            <div className="grid grid-cols-3 gap-6 pt-6 mt-8 border-t border-white/[0.08] max-w-xl">
+              <div>
+                <span className="text-[11px] text-slate-400 block mb-0.5">Math Accuracy</span>
+                <span className="text-xs font-bold text-emerald-400">0% Hallucinations</span>
+              </div>
+              <div>
+                <span className="text-[11px] text-slate-400 block mb-0.5">Regulatory Rules</span>
+                <span className="text-xs font-bold text-slate-200">SEBI RAG Guarded</span>
+              </div>
+              <div>
+                <span className="text-[11px] text-slate-400 block mb-0.5">Crisis Defense</span>
+                <span className="text-xs font-bold text-slate-200">WhatsApp Alert</span>
+              </div>
+            </div>
           </div>
-        </motion.div>
 
-        {/* Main Headline */}
-        <motion.h1
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.2, duration: 0.6 }}
-          className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-[1.05]"
-          style={{ fontFamily: "'Instrument Sans', sans-serif" }}
-        >
-          <span className="bg-gradient-to-b from-white via-white to-[#7a9cff] bg-clip-text text-transparent">
-            Stop Guessing.
-          </span>
-          <br />
-          <span className="bg-gradient-to-b from-white via-white to-[#7a9cff] bg-clip-text text-transparent">
-            Start
-          </span>
-          <span
-            className="italic ml-[0.3em]"
-            style={{ fontFamily: "'Instrument Serif', serif", background: 'linear-gradient(135deg, #45A29E 0%, #66d9d0 50%, #45A29E 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}
-          >
-            Guarding.
-          </span>
-        </motion.h1>
+          {/* Right Column: Live Telemetry Terminal Card */}
+          <div className="lg:col-span-5">
+            <div className="rounded-2xl border border-white/[0.12] bg-[#111622] p-5 sm:p-6 shadow-2xl shadow-emerald-950/20 flex flex-col gap-4">
+              
+              {/* Terminal Header */}
+              <div className="flex items-center justify-between border-b border-white/[0.08] pb-4">
+                <div className="flex items-center gap-2.5">
+                  <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
+                  <span className="text-xs font-bold text-white uppercase tracking-wider">
+                    Sthira Telemetry Stream
+                  </span>
+                </div>
+                <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-400 font-semibold border border-emerald-500/20">
+                  Dual 8B/70B Active
+                </span>
+              </div>
 
-        {/* Subheadline */}
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 0.7 }}
-          transition={{ delay: 0.4, duration: 0.6 }}
-          className="text-lg sm:text-xl leading-relaxed text-white max-w-2xl"
-          style={{ fontFamily: "'Instrument Sans', sans-serif" }}
-        >
-          12-18% of SIPs stop during market corrections. AstraGuard monitors your
-          portfolio and intercepts financial panic before it destroys your future.
-        </motion.p>
+              {/* Active User Snapshot */}
+              <div className="flex items-center justify-between text-xs bg-[#0E131F] p-3 rounded-xl border border-white/[0.05]">
+                <div>
+                  <span className="text-slate-500 block text-[10px] uppercase tracking-wider">Active Portfolio</span>
+                  <span className="font-semibold text-white">Santosh Pradhan (61y, Retiree)</span>
+                </div>
+                <div className="text-right">
+                  <span className="text-slate-500 block text-[10px] uppercase tracking-wider">Verification</span>
+                  <span className="text-emerald-400 font-semibold">Form 16 + CAS Verified</span>
+                </div>
+              </div>
 
-        {/* CTA Buttons */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6, duration: 0.5 }}
-          className="flex flex-col sm:flex-row gap-4 items-center"
-        >
-          {/* Primary */}
-          <Link
-            to="/onboard"
-            className="font-bold rounded-full flex items-center hover:opacity-90 transition-all duration-200"
-            style={{
-              padding: '16px 36px', gap: 10,
-              background: 'linear-gradient(135deg, #45A29E 0%, #3d9490 100%)',
-              color: 'white', fontSize: 15, textDecoration: 'none',
-              boxShadow: '0 0 30px rgba(69,162,158,0.25), 0 8px 24px rgba(0,0,0,0.3)',
-              border: '1px solid rgba(69,162,158,0.4)',
-            }}
-          >
-            Extract Financial DNA
-            <ArrowRight style={{ width: 18, height: 18 }} />
-          </Link>
+              {/* Metric Grid 2x2 */}
+              <div className="grid grid-cols-2 gap-3">
+                <div className="p-3.5 rounded-xl bg-[#0E131F] border border-white/[0.06]">
+                  <span className="text-[11px] text-slate-400 block mb-1">Invested Assets</span>
+                  <span className="text-xl font-bold text-white">₹75,00,000</span>
+                  <span className="text-[11px] text-emerald-400 font-semibold block mt-1">+17.4% XIRR</span>
+                </div>
 
-          {/* Secondary */}
-          <button
-            onClick={() => { document.getElementById('features-section')?.scrollIntoView({ behavior: 'smooth' }); }}
-            className="group flex items-center cursor-pointer transition-all duration-200 hover:bg-white/[0.08]"
-            style={{
-              padding: '16px 32px', gap: 12,
-              background: 'rgba(255,255,255,0.05)',
-              border: '1px solid rgba(255,255,255,0.15)',
-              borderRadius: 100, color: 'white', fontWeight: 600, fontSize: 15,
-              backdropFilter: 'blur(12px)',
-            }}
-          >
-            <Play style={{ width: 18, height: 18 }} />
-            <span style={{ fontFamily: "'Instrument Sans', sans-serif" }}>
-              See Features
-            </span>
-          </button>
-        </motion.div>
+                <div className="p-3.5 rounded-xl bg-[#0E131F] border border-white/[0.06]">
+                  <span className="text-[11px] text-slate-400 block mb-1">Arth Wellness Score</span>
+                  <span className="text-xl font-bold text-white">785 <span className="text-xs text-slate-500 font-normal">/ 1000</span></span>
+                  <span className="text-[11px] text-amber-400 font-semibold block mt-1">Top 8% Discipline</span>
+                </div>
+
+                <div className="p-3.5 rounded-xl bg-[#0E131F] border border-white/[0.06]">
+                  <span className="text-[11px] text-slate-400 block mb-1">Tax Optimized</span>
+                  <span className="text-xl font-bold text-emerald-400">+₹44,200</span>
+                  <span className="text-[11px] text-slate-400 block mt-1">Old Regime (Sec 24b)</span>
+                </div>
+
+                <div className="p-3.5 rounded-xl bg-[#0E131F] border border-white/[0.06]">
+                  <span className="text-[11px] text-slate-400 block mb-1">FIRE Retirement</span>
+                  <span className="text-xl font-bold text-white">Age 48</span>
+                  <span className="text-[11px] text-emerald-400 font-semibold block mt-1">₹3.8 Cr Locked</span>
+                </div>
+              </div>
+
+              {/* Behavioral Intervention Alert Simulation */}
+              <div className="p-4 rounded-xl border border-rose-500/30 bg-rose-500/[0.06] flex flex-col gap-2">
+                <div className="flex items-center justify-between text-xs">
+                  <span className="font-bold text-rose-400 flex items-center gap-1.5">
+                    <span className="w-2 h-2 rounded-full bg-rose-400 animate-ping" />
+                    Market -3.4% Panic Intercept
+                  </span>
+                  <span className="text-[10px] font-mono text-slate-400">WhatsApp Triggered</span>
+                </div>
+                <p className="text-xs text-slate-300 leading-relaxed">
+                  "Santosh, pausing your SIP today delays your retirement by 18 months. Compounding is protected."
+                </p>
+                <div className="flex items-center justify-between pt-1 text-[11px]">
+                  <span className="text-emerald-400 font-semibold">SIP Streak Preserved: 412 Days</span>
+                  <span className="text-slate-400">Guard: Active</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
       </div>
-
-
     </section>
-  );
+  )
 }

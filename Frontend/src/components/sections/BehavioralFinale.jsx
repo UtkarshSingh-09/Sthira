@@ -93,7 +93,7 @@ function PhoneScreen() {
               <MessageCircle className="text-white" style={{ width: 15, height: 15 }} />
             </div>
             <div className="flex-1 min-w-0">
-              <p className="font-bold text-[#25D366]" style={{ fontSize: 11, lineHeight: 1.3 }}>AstraGuard Alert</p>
+              <p className="font-bold text-[#25D366]" style={{ fontSize: 11, lineHeight: 1.3 }}>Sthira Alert</p>
               <p className="text-[#94A3B8]" style={{ fontSize: 9 }}>via WhatsApp · now</p>
             </div>
             <Bell className="flex-shrink-0 text-[#25D366]/70 phone-bell" style={{ width: 14, height: 14 }} />
@@ -289,7 +289,7 @@ export default function BehavioralFinale() {
 
           {/* Body */}
           <p className="text-xl text-text-slate leading-relaxed">
-            AstraGuard doesn't just calculate your future; it actively defends it.
+            Sthira doesn't just calculate your future; it actively defends it.
             When the market bleeds, we block the behavioral mistakes that destroy wealth.
           </p>
 

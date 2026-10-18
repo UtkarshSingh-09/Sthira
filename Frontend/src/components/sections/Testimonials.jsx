@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 
 const testimonials = [
   {
-    quote: "AstraGuard completely changed how I think about my SIPs. During the March correction, I would have panic-sold everything — but the behavioral intercept stopped me. My portfolio recovered 23% in 6 weeks.",
+    quote: "Sthira completely changed how I think about my SIPs. During the March correction, I would have panic-sold everything — but the behavioral intercept stopped me. My portfolio recovered 23% in 6 weeks.",
     name: "Raghav Mehta",
     role: "Software Engineer @ Flipkart",
     initials: "RM",
@@ -14,7 +14,7 @@ const testimonials = [
     initials: "PS",
   },
   {
-    quote: "I've used every retirement calculator out there. AstraGuard's FIRE Planner is the first one that actually adjusts in real-time when I change assumptions. The stress test feature is genuinely brilliant.",
+    quote: "I've used every retirement calculator out there. Sthira's FIRE Planner is the first one that actually adjusts in real-time when I change assumptions. The stress test feature is genuinely brilliant.",
     name: "Ankur Desai",
     role: "VP Engineering @ Zerodha",
     initials: "AD",

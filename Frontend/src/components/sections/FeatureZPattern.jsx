@@ -92,7 +92,7 @@ function FireVisual() {
                     justifyContent: msg.sender === 'User' ? 'flex-end' : 'flex-start',
                   }}>
                     <span style={{ fontSize: '10px', fontWeight: 600, color: 'rgba(255,255,255,0.3)', letterSpacing: '0.05em' }}>
-                      {msg.sender === 'AI' ? 'AstraGuard' : 'You'}
+                      {msg.sender === 'AI' ? 'Sthira' : 'You'}
                     </span>
                     {!msg.done && (
                       <span style={{ fontSize: '9px', color: 'rgba(69,243,255,0.5)', fontFamily: 'monospace', letterSpacing: '0.1em' }}>
@@ -139,7 +139,7 @@ function TaxVisual() {
         {/* Header */}
         <div>
           <h4 style={{ fontSize: '20px', fontWeight: 500, color: 'white', letterSpacing: '-0.01em', marginBottom: '4px' }}>Old Regime Verification</h4>
-          <p style={{ fontSize: '10px', color: 'rgba(69,162,158,0.5)', fontFamily: 'monospace', letterSpacing: '0.15em', textTransform: 'uppercase' }}>ASTRAGUARD INTELLIGENCE • ACTIVE</p>
+          <p style={{ fontSize: '10px', color: 'rgba(16,185,129,0.7)', fontFamily: 'monospace', letterSpacing: '0.15em', textTransform: 'uppercase' }}>STHIRA INTELLIGENCE • ACTIVE</p>
         </div>
 
         {/* List items - NO borders, NO bars, clean flat list */}
