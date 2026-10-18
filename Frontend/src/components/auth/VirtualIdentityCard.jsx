@@ -2,17 +2,27 @@ import React from 'react';
 import { ShieldCheck, Cpu, Lock, CheckCircle2, AlertTriangle } from 'lucide-react';
 
 export default function VirtualIdentityCard({ user, formData, isSignup }) {
-  const displayName = isSignup ? (formData?.name || 'INVESTOR HOLDER') : (user?.name || 'INVESTOR HOLDER');
-  const rawPan = isSignup ? (formData?.pan || 'ABCPS1234F') : (user?.pan || 'ABCPS1234F');
-  const maskedPan = rawPan.length >= 10 
-    ? `${rawPan.slice(0, 5)}••••${rawPan.slice(9)}` 
-    : (rawPan || 'ABCDE••••F');
+  const activeData = isSignup ? formData : user;
   
-  const displayGoal = isSignup ? (formData?.wealth_goal || 'FIRE Early Retirement') : (user?.wealth_goal || 'FIRE Early Retirement');
-  const displayPanic = isSignup ? (formData?.panic_threshold || -15) : (user?.panic_threshold || -15);
-  const displaySalary = isSignup 
-    ? (formData?.annual_salary ? `₹${(Number(formData.annual_salary)/100000).toFixed(1)}L PA` : '₹24.0L PA') 
-    : `₹${((user?.annual_salary || 2400000)/100000).toFixed(1)}L PA`;
+  const displayName = activeData?.name?.trim() ? activeData.name.toUpperCase() : 'YOUR NAME';
+  const rawPan = (activeData?.pan || '').trim().toUpperCase();
+  
+  let maskedPan = '••••••••••';
+  if (rawPan.length >= 10) {
+    maskedPan = `${rawPan.slice(0, 5)}••••${rawPan.slice(9)}`;
+  } else if (rawPan.length > 0) {
+    maskedPan = `${rawPan}${'•'.repeat(Math.max(0, 10 - rawPan.length))}`;
+  }
+
+  const displayGoal = activeData?.wealth_goal || 'FIRE Early Retirement';
+  const displayPanic = activeData?.panic_threshold !== undefined && activeData?.panic_threshold !== '' 
+    ? activeData.panic_threshold 
+    : -15;
+
+  const salaryNum = Number(activeData?.annual_salary);
+  const displaySalary = salaryNum > 0 
+    ? `₹${(salaryNum / 100000).toFixed(1)}L PA` 
+    : '₹--.-L PA';
 
   return (
     <div className="relative w-full max-w-md mx-auto group">
@@ -65,7 +75,7 @@ export default function VirtualIdentityCard({ user, formData, isSignup }) {
           <div className="text-right">
             <div className="text-xs font-semibold text-[#D98324] flex items-center justify-end space-x-1">
               <CheckCircle2 className="h-3.5 w-3.5" />
-              <span>e-KYC VERIFIED</span>
+              <span>{rawPan.length >= 10 ? 'e-KYC VERIFIED' : 'PENDING ONBOARDING'}</span>
             </div>
           </div>
         </div>
@@ -76,7 +86,7 @@ export default function VirtualIdentityCard({ user, formData, isSignup }) {
             PERMANENT ACCOUNT NUMBER
           </div>
           <div className="text-xl font-mono font-bold tracking-wider text-[#F2F6D0] flex items-center space-x-3">
-            <span>{maskedPan}</span>
+            <span className="tracking-widest">{maskedPan}</span>
             <span className="text-[10px] px-2 py-0.5 rounded bg-[#443627]/90 text-[#EFDCAB] border border-[#EFDCAB]/20 font-sans">
               Individual
             </span>
@@ -120,7 +130,7 @@ export default function VirtualIdentityCard({ user, formData, isSignup }) {
             <span>ISO 27001 • RBI ENCRYPTED</span>
           </div>
           <div className="text-[#EFDCAB] font-semibold">
-            TOKEN: STH-09X
+            TOKEN: STH-{activeData?.user_id ? activeData.user_id.slice(-4).toUpperCase() : 'VAULT'}
           </div>
         </div>
       </div>

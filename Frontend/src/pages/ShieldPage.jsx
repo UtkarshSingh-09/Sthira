@@ -9,7 +9,7 @@ import { useUser } from '../context/UserContext';
 export default function ShieldPage() {
   const { currentUser, backendUrl } = useUser();
   const [marketDrop, setMarketDrop] = useState(12.5);
-  const [phone, setPhone] = useState(currentUser?.phone || '+917565960168');
+  const [phone, setPhone] = useState(currentUser?.phone || '');
   const [isSending, setIsSending] = useState(false);
   const [sentSuccess, setSentSuccess] = useState(false);
   const [responseLog, setResponseLog] = useState(null);
@@ -32,7 +32,7 @@ export default function ShieldPage() {
 
     try {
       const res = await axios.post(`${backendUrl}/api/intervention/simulate`, {
-        user_id: currentUser?.user_id || 'user_ankit_sde2',
+        user_id: currentUser?.user_id || 'vault_investor',
         market_drop_pct: marketDrop,
         send_whatsapp: true,
         send_push: true

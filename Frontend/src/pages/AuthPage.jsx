@@ -10,19 +10,21 @@ export default function AuthPage() {
   const { currentUser } = useUser();
   const [authMode, setAuthMode] = useState('signup');
 
+  // Completely dynamic initial form state
   const [signupForm, setSignupForm] = useState({
-    name: 'Utkarsh Singh',
-    pan: 'ABCPS1234F',
-    email: 'utkarsh@sthira.ai',
-    phone: '9876543210',
+    name: '',
+    pan: '',
+    email: '',
+    phone: '',
+    password: '',
     age: 28,
     city_type: 'metro',
-    annual_salary: 2400000,
-    monthly_expenses: 65000,
-    existing_mf: 950000,
-    monthly_sip: 45000,
-    existing_epf: 440000,
-    existing_stocks: 60000,
+    annual_salary: '',
+    monthly_expenses: '',
+    existing_mf: '',
+    monthly_sip: '',
+    existing_epf: '',
+    existing_stocks: '',
     panic_threshold: -15,
     wealth_goal: 'FIRE Early Retirement (Age 42)',
     consent_cas: true,
@@ -36,7 +38,6 @@ export default function AuthPage() {
       <div className="absolute inset-0 bg-grid-subtle pointer-events-none opacity-40" />
       <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#D98324]/12 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-[#EFDCAB]/8 rounded-full blur-3xl pointer-events-none" />
-
 
       {/* Main Dual-Column Container */}
       <main className="relative z-10 flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-6 lg:py-10 flex items-center">
@@ -79,7 +80,7 @@ export default function AuthPage() {
                 <button
                   type="button"
                   onClick={() => setAuthMode('signup')}
-                  className={`flex-1 py-2 rounded-lg text-xs font-mono font-semibold transition flex items-center justify-center space-x-1.5 ${
+                  className={`flex-1 py-2 rounded-lg text-xs font-mono font-semibold transition flex items-center justify-center space-x-1.5 cursor-pointer ${
                     authMode === 'signup'
                       ? 'bg-gradient-to-r from-[#D98324] to-[#EFDCAB] text-[#271E16] shadow font-bold'
                       : 'text-[#EFDCAB]/70 hover:text-[#F2F6D0]'
@@ -91,7 +92,7 @@ export default function AuthPage() {
                 <button
                   type="button"
                   onClick={() => setAuthMode('login')}
-                  className={`flex-1 py-2 rounded-lg text-xs font-mono font-semibold transition flex items-center justify-center space-x-1.5 ${
+                  className={`flex-1 py-2 rounded-lg text-xs font-mono font-semibold transition flex items-center justify-center space-x-1.5 cursor-pointer ${
                     authMode === 'login'
                       ? 'bg-gradient-to-r from-[#D98324] to-[#EFDCAB] text-[#271E16] shadow font-bold'
                       : 'text-[#EFDCAB]/70 hover:text-[#F2F6D0]'
