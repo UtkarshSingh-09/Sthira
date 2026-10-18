@@ -1,4 +1,4 @@
-# AstraGuard Chrome Guide Extension
+# Sthira Chrome Guide Extension
 
 This extension gives proactive on-page guidance on:
 - KFintech CAS page (`mfs.kfintech.com`)

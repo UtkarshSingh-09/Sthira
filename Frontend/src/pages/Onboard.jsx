@@ -4,6 +4,8 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowUp, Sparkles, Shield, Play, Loader2 } from 'lucide-react'
 import { api } from '../services/api'
 import { getActiveUserId } from '../services/session'
+import Navbar from '../components/layout/Navbar'
+import Footer from '../components/layout/Footer'
 
 function formatINR(num) {
   if (num == null || isNaN(num)) return 'Rs 0'
@@ -77,7 +79,7 @@ export default function Onboard() {
     return [{
       id: 'm-0',
       sender: 'bot',
-      text: "Hi - I am AstraGuard AI. I will build your Financial DNA profile. Send your first answer to begin.",
+      text: "Hi - I am Sthira AI. I will build your Financial DNA profile. Send your first answer to begin.",
     }]
   })
   const [completionPct, setCompletionPct] = useState(0)
@@ -219,30 +221,31 @@ export default function Onboard() {
   const xray = engineResult.xray
 
   return (
-    <div className="min-h-screen w-full bg-[#0B0C10] flex flex-col items-center justify-center relative overflow-hidden">
-      <div className="pointer-events-none absolute inset-0">
-        <div
-          className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full opacity-20"
-          style={{ background: 'radial-gradient(circle, rgba(69,162,158,0.12) 0%, transparent 65%)' }}
-        />
-      </div>
+    <div className="min-h-screen w-full bg-[#090D16] text-white flex flex-col font-sans selection:bg-emerald-500/25">
+      <Navbar />
+      <div className="flex-1 w-full flex flex-col items-center justify-center relative overflow-hidden py-10">
+        <div className="pointer-events-none absolute inset-0">
+          <div
+            className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full opacity-10"
+            style={{ background: 'radial-gradient(circle, rgba(16,185,129,0.12) 0%, transparent 65%)' }}
+          />
+        </div>
 
-      <div className="relative z-10 w-full flex flex-col items-center" style={{ maxWidth: 900, padding: '0 24px' }}>
-        <motion.div
-          initial={{ opacity: 0, y: -16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-          className="flex flex-col items-center"
-          style={{ gap: 16, marginBottom: 24 }}
-        >
-          <div className="flex items-center justify-center rounded-2xl bg-[#45A29E]/15 border border-[#45A29E]/25" style={{ height: 56, width: 56 }}>
-            <Shield className="text-[#45A29E]" style={{ height: 28, width: 28 }} strokeWidth={1.75} />
-          </div>
-          <div className="text-center">
-            <h1 className="font-bold text-white tracking-tight" style={{ fontSize: 24 }}>Financial DNA Extraction</h1>
-            <p className="text-[#94A3B8]" style={{ fontSize: 14, marginTop: 8 }}>Complete profile, then run specialist engines</p>
-          </div>
-        </motion.div>
+        <div className="relative z-10 w-full flex flex-col items-center max-w-4xl px-4 sm:px-6">
+          <motion.div
+            initial={{ opacity: 0, y: -16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            className="flex flex-col items-center gap-3 mb-6"
+          >
+            <div className="flex items-center justify-center rounded-2xl bg-emerald-500/15 border border-emerald-500/25 h-14 w-14">
+              <Shield className="text-emerald-400 h-7 w-7" strokeWidth={1.75} />
+            </div>
+            <div className="text-center">
+              <h1 className="font-extrabold text-white tracking-tight text-2xl sm:text-3xl">AI Financial Onboarding & DNA Extraction</h1>
+              <p className="text-slate-400 text-xs sm:text-sm mt-1">Chat-based behavioral extraction with zero manual form-filling</p>
+            </div>
+          </motion.div>
 
         <motion.div
           initial={{ opacity: 0 }}
@@ -252,7 +255,7 @@ export default function Onboard() {
           style={{ marginBottom: 20 }}
         >
           <div className="flex-1 rounded-full bg-white/[0.04] overflow-hidden border border-white/10" style={{ height: 8 }}>
-            <div className="h-full bg-[#45A29E] transition-all duration-700 ease-out" style={{ width: `${Math.max(5, completionPct)}%` }} />
+            <div className="h-full bg-[#10B981] transition-all duration-700 ease-out" style={{ width: `${Math.max(5, completionPct)}%` }} />
           </div>
         </motion.div>
 
@@ -267,7 +270,7 @@ export default function Onboard() {
             <span className="font-semibold uppercase text-[#94A3B8]" style={{ fontSize: 11, letterSpacing: '0.14em' }}>
               {isDone ? 'Profile complete' : 'Gathering DNA'}
             </span>
-            <span className="font-semibold text-[#45A29E] tabular-nums" style={{ fontSize: 13 }}>{Math.round(completionPct)}%</span>
+            <span className="font-semibold text-[#10B981] tabular-nums" style={{ fontSize: 13 }}>{Math.round(completionPct)}%</span>
           </div>
 
           <div className="flex-1 overflow-y-auto flex flex-col [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" style={{ padding: '20px 24px', gap: 18 }}>
@@ -283,15 +286,15 @@ export default function Onboard() {
                 >
                   {msg.sender === 'bot' ? (
                     <div className="flex items-start" style={{ gap: 12, maxWidth: '90%' }}>
-                      <div className="shrink-0 rounded-full bg-[#45A29E]/12 border border-[#45A29E]/25 flex items-center justify-center" style={{ height: 34, width: 34, marginTop: 2 }}>
-                        <Sparkles className="text-[#45A29E]" style={{ height: 16, width: 16 }} strokeWidth={1.75} />
+                      <div className="shrink-0 rounded-full bg-[#10B981]/12 border border-[#10B981]/25 flex items-center justify-center" style={{ height: 34, width: 34, marginTop: 2 }}>
+                        <Sparkles className="text-[#10B981]" style={{ height: 16, width: 16 }} strokeWidth={1.75} />
                       </div>
                       <div className="rounded-2xl rounded-tl-sm bg-[#1a1d24] border border-white/[0.07] text-white whitespace-pre-line" style={{ padding: '14px 16px', fontSize: 14, lineHeight: 1.6 }}>
                         {msg.text}
                       </div>
                     </div>
                   ) : (
-                    <div className="rounded-2xl rounded-tr-sm bg-[#45A29E]/12 border border-[#45A29E]/20 text-white" style={{ padding: '14px 16px', fontSize: 14, lineHeight: 1.6, maxWidth: '80%' }}>
+                    <div className="rounded-2xl rounded-tr-sm bg-[#10B981]/12 border border-[#10B981]/20 text-white" style={{ padding: '14px 16px', fontSize: 14, lineHeight: 1.6, maxWidth: '80%' }}>
                       {msg.text}
                     </div>
                   )}
@@ -315,7 +318,7 @@ export default function Onboard() {
                   <button
                     type="button"
                     onClick={() => navigate('/dashboard')}
-                    className="rounded-lg bg-[#45A29E]/15 border border-[#45A29E]/35 text-[#45A29E] font-semibold hover:bg-[#45A29E]/25 disabled:opacity-50"
+                    className="rounded-lg bg-[#10B981]/15 border border-[#10B981]/35 text-[#10B981] font-semibold hover:bg-[#10B981]/25 disabled:opacity-50"
                     style={{ padding: '10px 12px', fontSize: 13 }}
                   >
                     <span className="inline-flex items-center" style={{ gap: 8 }}>
@@ -326,7 +329,7 @@ export default function Onboard() {
                   <button
                     type="button"
                     onClick={() => navigate('/tax')}
-                    className="rounded-lg bg-[#45A29E]/15 border border-[#45A29E]/35 text-[#45A29E] font-semibold hover:bg-[#45A29E]/25 disabled:opacity-50"
+                    className="rounded-lg bg-[#10B981]/15 border border-[#10B981]/35 text-[#10B981] font-semibold hover:bg-[#10B981]/25 disabled:opacity-50"
                     style={{ padding: '10px 12px', fontSize: 13 }}
                   >
                     Open Tax Optimizer
@@ -334,7 +337,7 @@ export default function Onboard() {
                   <button
                     type="button"
                     onClick={() => navigate('/fire')}
-                    className="rounded-lg bg-[#45A29E]/15 border border-[#45A29E]/35 text-[#45A29E] font-semibold hover:bg-[#45A29E]/25 disabled:opacity-50"
+                    className="rounded-lg bg-[#10B981]/15 border border-[#10B981]/35 text-[#10B981] font-semibold hover:bg-[#10B981]/25 disabled:opacity-50"
                     style={{ padding: '10px 12px', fontSize: 13 }}
                   >
                     Open FIRE Planner
@@ -342,7 +345,7 @@ export default function Onboard() {
                   <button
                     type="button"
                     onClick={() => navigate('/portfolio?view=xray')}
-                    className="rounded-lg bg-[#45A29E]/15 border border-[#45A29E]/35 text-[#45A29E] font-semibold hover:bg-[#45A29E]/25 disabled:opacity-50"
+                    className="rounded-lg bg-[#10B981]/15 border border-[#10B981]/35 text-[#10B981] font-semibold hover:bg-[#10B981]/25 disabled:opacity-50"
                     style={{ padding: '10px 12px', fontSize: 13 }}
                   >
                     Open Portfolio X-Ray
@@ -370,7 +373,7 @@ export default function Onboard() {
                   </div>
                   <div className="rounded-lg border border-white/[0.08] bg-black/30" style={{ padding: 10 }}>
                     <p className="text-[#94A3B8]" style={{ fontSize: 12 }}>Savings</p>
-                    <p className="text-[#45A29E] font-bold">{formatINR(tax?.calculation?.comparison?.savings_with_optimal)}</p>
+                    <p className="text-[#10B981] font-bold">{formatINR(tax?.calculation?.comparison?.savings_with_optimal)}</p>
                   </div>
                 </div>
                 {engineError.tax && <p className="text-rose-400" style={{ fontSize: 12, marginTop: 8 }}>{engineError.tax}</p>}
@@ -385,9 +388,9 @@ export default function Onboard() {
                   </div>
                 )}
                 <p className="text-white font-semibold" style={{ fontSize: 14, marginBottom: 8 }}>FIRE Result</p>
-                <div className="rounded-lg border border-[#45A29E]/30 bg-[#45A29E]/10" style={{ padding: 12 }}>
+                <div className="rounded-lg border border-[#10B981]/30 bg-[#10B981]/10" style={{ padding: 12 }}>
                   <p className="text-[#94A3B8]" style={{ fontSize: 12 }}>Projected Retirement Age</p>
-                  <p className="text-[#45A29E] font-bold" style={{ fontSize: 26 }}>
+                  <p className="text-[#10B981] font-bold" style={{ fontSize: 26 }}>
                     {fire?.calculation?.projected_retirement_age ?? '--'}
                   </p>
                 </div>
@@ -435,7 +438,7 @@ export default function Onboard() {
 
           <div className="border-t border-white/[0.06] bg-[#0b0d10] shrink-0" style={{ padding: '16px 24px' }}>
             <div
-              className="flex items-center rounded-xl border transition-all duration-200 border-white/[0.1] bg-[#141720] focus-within:border-[#45A29E]/45"
+              className="flex items-center rounded-xl border transition-all duration-200 border-white/[0.1] bg-[#141720] focus-within:border-[#10B981]/45"
               style={{ padding: '12px 14px', gap: 10 }}
             >
               <input
@@ -452,7 +455,7 @@ export default function Onboard() {
                 onClick={handleSend}
                 disabled={!input.trim() || isTyping}
                 className={`flex shrink-0 items-center justify-center rounded-lg transition-all duration-150 ${
-                  input.trim() && !isTyping ? 'bg-[#45A29E] text-black hover:bg-[#3d9490] cursor-pointer' : 'bg-white/[0.05] text-white/20 cursor-not-allowed'
+                  input.trim() && !isTyping ? 'bg-[#10B981] text-black hover:bg-[#059669] cursor-pointer' : 'bg-white/[0.05] text-white/20 cursor-not-allowed'
                 }`}
                 style={{ height: 34, width: 34 }}
               >
@@ -463,5 +466,7 @@ export default function Onboard() {
         </motion.div>
       </div>
     </div>
-  )
+    <Footer />
+  </div>
+)
 }

@@ -1,118 +1,116 @@
-import { useEffect, useRef } from 'react'
-import HeroSection from '../components/sections/HeroSection'
-import PerspectiveGrid from '../components/sections/PerspectiveGrid'
-import AgentShowcase from '../components/sections/AgentShowcase'
-import FeatureZPattern from '../components/sections/FeatureZPattern'
-import PanicIntercept from '../components/sections/PanicIntercept'
-import BehavioralFinale from '../components/sections/BehavioralFinale'
+import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
+import { Sparkles, ArrowRight, ShieldCheck, X, PieChart, Flame, Scale } from 'lucide-react'
 import Navbar from '../components/layout/Navbar'
+import HeroSection from '../components/sections/HeroSection'
+import QuickDemoPersonas from '../components/sections/QuickDemoPersonas'
+import HowItWorksSimple from '../components/sections/HowItWorksSimple'
+import InteractiveEnginePlayground from '../components/sections/InteractiveEnginePlayground'
+import AgentArchitectureExplorer from '../components/sections/AgentArchitectureExplorer'
+import Footer from '../components/layout/Footer'
+import { getActiveUserProfile, isJustSignedUp, clearJustSignedUpFlag } from '../services/session'
 
-function FloatingDots() {
-  const canvasRef = useRef(null)
-
-  useEffect(() => {
-    const canvas = canvasRef.current
-    if (!canvas) return
-    const ctx = canvas.getContext('2d')
-    if (!ctx) return
-    let animId
-
-    const resize = () => {
-      canvas.width = window.innerWidth
-      canvas.height = window.innerHeight
-    }
-    resize()
-    window.addEventListener('resize', resize)
-
-    const DOT_COUNT = 60
-    const dots = Array.from({ length: DOT_COUNT }, () => ({
-      x: Math.random() * canvas.width,
-      y: Math.random() * canvas.height,
-      r: Math.random() * 1.5 + 0.5,
-      vx: (Math.random() - 0.5) * 0.15,
-      vy: (Math.random() - 0.5) * 0.12,
-      opacity: Math.random() * 0.25 + 0.05,
-      pulse: Math.random() * Math.PI * 2,
-    }))
-
-    const draw = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height)
-      for (const d of dots) {
-        d.x += d.vx
-        d.y += d.vy
-        d.pulse += 0.008
-        const o = d.opacity + Math.sin(d.pulse) * 0.06
-
-        if (d.x < -10) d.x = canvas.width + 10
-        if (d.x > canvas.width + 10) d.x = -10
-        if (d.y < -10) d.y = canvas.height + 10
-        if (d.y > canvas.height + 10) d.y = -10
-
-        ctx.beginPath()
-        ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2)
-        ctx.fillStyle = `rgba(69,162,158,${Math.max(0, o)})`
-        ctx.fill()
-      }
-      animId = requestAnimationFrame(draw)
-    }
-    draw()
-
-    return () => {
-      cancelAnimationFrame(animId)
-      window.removeEventListener('resize', resize)
-    }
-  }, [])
-
-  return (
-    <canvas
-      ref={canvasRef}
-      style={{
-        position: 'fixed', top: 0, left: 0,
-        width: '100vw', height: '100vh',
-        pointerEvents: 'none', zIndex: 1,
-      }}
-    />
-  )
+function formatINR(num) {
+  if (num == null || isNaN(num)) return '₹0'
+  if (num >= 10000000) return `₹${(num / 10000000).toFixed(2)} Cr`
+  if (num >= 100000) return `₹${(num / 100000).toFixed(1)} Lakhs`
+  return `₹${Math.round(num).toLocaleString('en-IN')}`
 }
 
 export default function LandingPage() {
+  const [profile, setProfile] = useState(() => getActiveUserProfile())
+  const [showWelcome, setShowWelcome] = useState(() => isJustSignedUp())
+
+  useEffect(() => {
+    const handleUpdate = () => {
+      setProfile(getActiveUserProfile())
+      if (isJustSignedUp()) {
+        setShowWelcome(true)
+      }
+    }
+    window.addEventListener('sthira_profile_updated', handleUpdate)
+    window.addEventListener('storage', handleUpdate)
+    return () => {
+      window.removeEventListener('sthira_profile_updated', handleUpdate)
+      window.removeEventListener('storage', handleUpdate)
+    }
+  }, [])
+
+  const handleDismiss = () => {
+    setShowWelcome(false)
+    clearJustSignedUpFlag()
+  }
+
   return (
-    <main className="relative min-h-screen bg-void w-full" style={{ overflowX: 'hidden' }}>
-      {/* Galactic Space Background */}
-      <div className="fixed inset-0 z-0 pointer-events-none">
-        <div 
-          className="absolute inset-0 opacity-[0.06]" 
-          style={{
-            backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px)`,
-            backgroundSize: '40px 40px'
-          }}
-        />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#0B0C10_100%)] opacity-80" />
-      </div>
+    <div className="min-h-screen bg-[#090D16] text-slate-100 flex flex-col selection:bg-emerald-500/25 selection:text-white">
+      {/* Institutional Top Navbar */}
+      <Navbar />
 
-      <FloatingDots />
+      {/* Onboarding Welcome Banner if just registered */}
+      {showWelcome && (
+        <aside aria-label="Onboarding Notification" className="w-full bg-emerald-500/10 border-b border-emerald-500/20 px-4 py-3.5 relative z-40 backdrop-blur-md">
+          <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+            <div className="flex items-center gap-3">
+              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 shrink-0">
+                <Sparkles className="h-5 w-5" />
+              </div>
+              <div className="flex flex-col">
+                <div className="flex items-center gap-2">
+                  <span className="text-xs font-bold text-white">
+                    Welcome to Sthira OS, {profile?.name || 'Investor'}!
+                  </span>
+                  <span className="text-[10px] font-semibold text-emerald-400 bg-emerald-500/20 px-2 py-0.5 rounded border border-emerald-500/30">
+                    Profile Initialized
+                  </span>
+                </div>
+                <p className="text-[11px] text-slate-300">
+                  Your portfolio of <strong className="text-emerald-400">{formatINR(profile?.portfolio_value)}</strong> and monthly SIP of <strong className="text-white">{formatINR(profile?.monthly_sip)}</strong> are now wired into the autonomous behavioral engine.
+                </p>
+              </div>
+            </div>
 
-      {/* Foreground Content */}
-      <div className="relative z-10 w-full">
-        <Navbar />
+            <div className="flex items-center gap-2 self-end sm:self-center">
+              <Link
+                to="/portfolio"
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-[#090D16] text-xs font-bold transition-all shadow-sm"
+              >
+                <PieChart className="h-3.5 w-3.5" />
+                <span>Open Portfolio X-Ray</span>
+                <ArrowRight className="h-3 w-3" />
+              </Link>
+              <button
+                type="button"
+                onClick={handleDismiss}
+                className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/[0.05] transition-colors"
+                title="Dismiss"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            </div>
+          </div>
+        </aside>
+      )}
+
+      {/* Main Content Area */}
+      <main className="flex-1 w-full flex flex-col gap-20 sm:gap-28">
+        {/* 1. Hero Section: Core Philosophy, System Stats, Immediate Action */}
         <HeroSection />
 
-        <PerspectiveGrid />
+        {/* 2. 1-Click Interactive Personas for instant zero-friction exploration */}
+        <QuickDemoPersonas />
 
-        <AgentShowcase />
+        {/* 3. Plain English 3-Step Process: Ingest -> Deterministic Engines -> Autonomous Agents */}
+        <HowItWorksSimple />
 
-        <PerspectiveGrid
-          badge="Core Engines"
-          title="Three Engines."
-          highlightWord="Zero Guesswork."
-          titleSuffix=""
-          subtitle="Deterministic math, traceable logic, and zero hallucinated numbers."
-        />
+        {/* 4. The Star: Live Interactive Engine Playground (FIRE, Tax, Portfolio Overlap, Panic Interceptor) */}
+        <InteractiveEnginePlayground />
 
-        <FeatureZPattern />
+        {/* 5. Deep Multi-Agent Architecture: 10 Agents, Latency, Llama 8B/70B, Guardrails */}
+        <AgentArchitectureExplorer />
+      </main>
 
-        <BehavioralFinale />
-      </div>
-    </main>
+      {/* Institutional Footer */}
+      <Footer />
+    </div>
   )
 }

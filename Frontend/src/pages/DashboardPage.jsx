@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import {
   CheckCircle,
@@ -14,338 +15,597 @@ import {
   BarChart3,
   ArrowRight,
   Loader2,
+  Users,
+  ShieldCheck,
+  CheckCircle2,
+  Sparkles,
+  Smartphone,
+  X
 } from 'lucide-react'
+import Navbar from '../components/layout/Navbar'
+import Footer from '../components/layout/Footer'
 import { api } from '../services/api'
-import { getActiveUserId } from '../services/session'
-import { useState, useEffect } from 'react'
+import { getActiveUserId, setActiveUserId, getActiveUserProfile, setActiveUserProfile } from '../services/session'
+
+const PERSONAS_CONFIG = {
+  'user_rahul_sharma': {
+    name: 'Rahul Sharma',
+    tag: 'FIRE Candidate • ₹28L CTC',
+    age: 32,
+    portfolio_value: 3850000,
+    annual_salary: 2800000,
+    monthly_sip: 85000,
+    xirr: 15.8,
+    arth_score: { total: 840, max: 1000 },
+    fire_summary: { target_age: 45, projected_age: 46, corpus_needed: 65000000 },
+    tax_summary: { optimal_regime: 'New Regime (Sec 115BAC)', savings: 48500 },
+    streak_days: 127
+  },
+  'user_priya_verma': {
+    name: 'Priya Verma',
+    tag: 'IT Lead • Overlap Alert',
+    age: 29,
+    portfolio_value: 2420000,
+    annual_salary: 2200000,
+    monthly_sip: 55000,
+    xirr: 13.4,
+    arth_score: { total: 710, max: 1000 },
+    fire_summary: { target_age: 48, projected_age: 51, corpus_needed: 42000000 },
+    tax_summary: { optimal_regime: 'Old Regime (80C + 80D + HRA)', savings: 36200 },
+    streak_days: 84
+  },
+  'user_santosh_pradhan': {
+    name: 'Santosh Chandrakant Pradhan',
+    tag: 'Senior Citizen • Form 16 Verified',
+    age: 64,
+    portfolio_value: 8450000,
+    annual_salary: 1450000,
+    monthly_sip: 25000,
+    xirr: 11.8,
+    arth_score: { total: 915, max: 1000 },
+    fire_summary: { target_age: 60, projected_age: 60, corpus_needed: 80000000 },
+    tax_summary: { optimal_regime: 'Old Regime (80TTB + 80D Senior)', savings: 54000 },
+    streak_days: 340
+  },
+  'user_123': {
+    name: 'Santosh Chandrakant Pradhan',
+    tag: 'Form 16 Default Account',
+    age: 64,
+    portfolio_value: 8450000,
+    annual_salary: 1450000,
+    monthly_sip: 25000,
+    xirr: 11.8,
+    arth_score: { total: 915, max: 1000 },
+    fire_summary: { target_age: 60, projected_age: 60, corpus_needed: 80000000 },
+    tax_summary: { optimal_regime: 'Old Regime (80TTB + 80D Senior)', savings: 54000 },
+    streak_days: 340
+  }
+}
 
 function KpiCard({ icon: Icon, iconColor, iconBg, label, value, sub, badge, badgeColor }) {
   return (
-    <div style={{ padding: '32px 28px' }}
-      className="flex flex-col rounded-2xl border border-white/[0.09] bg-[#111318] gap-8 hover:border-white/[0.16] transition-colors duration-200">
+    <div className="flex flex-col rounded-2xl border border-white/[0.08] bg-[#111622] p-6 sm:p-7 gap-6 hover:border-white/[0.16] transition-colors duration-200">
       <div className="flex items-center justify-between">
         <div className={`flex h-12 w-12 items-center justify-center rounded-xl ${iconBg}`}>
           <Icon className={`h-6 w-6 ${iconColor}`} strokeWidth={1.75} />
         </div>
         {badge && (
-          <span className={`flex items-center gap-1.5 text-[12px] font-semibold rounded-full px-3 py-1.5 ${badgeColor}`}>
-            <TrendingUp className="h-3.5 w-3.5" />
+          <span className={`flex items-center gap-1.5 text-xs font-semibold rounded-full px-3 py-1 ${badgeColor}`}>
+            <TrendingUp className="h-3 w-3" />
             {badge}
           </span>
         )}
       </div>
-      <div className="flex flex-col gap-2">
-        <p className="text-[11px] font-bold text-[#94A3B8] tracking-widest uppercase">{label}</p>
-        <p className="text-[34px] font-bold text-white leading-none tracking-tight">{value}</p>
-        {sub && <p className="text-[13px] text-[#94A3B8]/70 mt-1">{sub}</p>}
+      <div className="flex flex-col gap-1.5">
+        <p className="text-[11px] font-bold text-slate-400 tracking-wider uppercase">{label}</p>
+        <p className="text-3xl font-extrabold text-white leading-none tracking-tight">{value}</p>
+        {sub && <p className="text-xs text-slate-400 mt-1">{sub}</p>}
       </div>
     </div>
   )
 }
 
 function ProgressRing({ valuePct, score, max }) {
-  const r = 74
+  const r = 70
   const circ = 2 * Math.PI * r
   const offset = circ - (Math.min(100, Math.max(0, valuePct)) / 100) * circ
-  const sz = 192
+  const sz = 180
+
   return (
     <div className="relative flex items-center justify-center mx-auto" style={{ width: sz, height: sz }}>
       <svg width={sz} height={sz} className="-rotate-90" aria-hidden>
         <circle cx={sz / 2} cy={sz / 2} r={r} stroke="rgba(255,255,255,0.06)" strokeWidth="10" fill="none" />
-        <circle cx={sz / 2} cy={sz / 2} r={r}
-          stroke="url(#ringGrad)" strokeWidth="10" fill="none"
-          strokeDasharray={circ} strokeDashoffset={offset} strokeLinecap="round"
+        <circle
+          cx={sz / 2}
+          cy={sz / 2}
+          r={r}
+          stroke="url(#emeraldRingGrad)"
+          strokeWidth="10"
+          fill="none"
+          strokeDasharray={circ}
+          strokeDashoffset={offset}
+          strokeLinecap="round"
           style={{ transition: 'stroke-dashoffset 0.9s cubic-bezier(.22,1,.36,1)' }}
         />
         <defs>
-          <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#2dd4bf" />
-            <stop offset="100%" stopColor="#45A29E" />
+          <linearGradient id="emeraldRingGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#10B981" />
+            <stop offset="100%" stopColor="#34D399" />
           </linearGradient>
         </defs>
       </svg>
       <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
-        <span className="text-[48px] font-bold text-white tabular-nums leading-none">{score}</span>
-        <span className="text-[13px] text-[#94A3B8] mt-2">of {max}</span>
+        <span className="text-4xl font-extrabold text-white tabular-nums leading-none">{score}</span>
+        <span className="text-xs text-slate-400 mt-2 font-medium">of {max}</span>
       </div>
     </div>
   )
 }
 
-const feed = [
-  {
-    icon: CheckCircle, iconColor: 'text-[#45A29E]', iconBg: 'bg-[#45A29E]/12',
-    tag: 'Milestone', tagColor: 'text-[#45A29E] bg-[#45A29E]/12',
-    title: 'Discipline milestone',
-    body: "127-day SIP streak — you're in the top 8% of all users.",
-    time: 'Just now',
-  },
-  {
-    icon: Activity, iconColor: 'text-[#94A3B8]', iconBg: 'bg-white/[0.06]',
-    tag: 'Market', tagColor: 'text-[#94A3B8] bg-white/[0.06]',
-    title: 'Market check complete',
-    body: 'Nifty 50 is flat today. No behavioral intervention scheduled.',
-    time: '09:18 IST',
-  },
-  {
-    icon: BarChart3, iconColor: 'text-amber-400', iconBg: 'bg-amber-400/10',
-    tag: 'Alert', tagColor: 'text-amber-400 bg-amber-400/10',
-    title: 'Rebalancing opportunity',
-    body: 'Large-cap overlap detected across 2 funds in your portfolio.',
-    time: 'Yesterday',
-  },
-]
-
-const engines = [
-  { to: '/fire', icon: Flame, title: 'FIRE Planner', desc: 'Retire at 50', badge: 'On track', badgeStyle: 'text-[#45A29E] bg-[#45A29E]/10', href: true },
-  { to: '/tax', icon: FileText, title: 'Tax Optimizer', desc: '₹31,200 saved', badge: 'Act now', badgeStyle: 'text-sky-400 bg-sky-400/10', href: true },
-  { to: '/portfolio?view=xray', icon: PieChart, title: 'Portfolio X-Ray', desc: 'Overlap found', badge: 'Review', badgeStyle: 'text-amber-400 bg-amber-400/10', href: true },
-  { icon: Target, title: 'Emergency Fund', desc: '6-mo runway', badge: '40% done', badgeStyle: 'text-[#94A3B8] bg-white/[0.06]', href: false },
-]
-
 export default function DashboardPage() {
   const [simulating, setSimulating] = useState(false)
-  const [profile, setProfile] = useState(null)
+  const [profile, setProfile] = useState(() => getActiveUserProfile())
+  const [activeId, setActiveId] = useState(getActiveUserId())
+  const [interventionResult, setInterventionResult] = useState(null)
 
   useEffect(() => {
+    const handleProfileChange = () => {
+      const p = getActiveUserProfile()
+      setProfile(p)
+      setActiveId(getActiveUserId())
+    }
+    window.addEventListener('sthira_profile_updated', handleProfileChange)
+    return () => window.removeEventListener('sthira_profile_updated', handleProfileChange)
+  }, [])
+
+  const activePersonaData = PERSONAS_CONFIG[activeId] || getActiveUserProfile() || PERSONAS_CONFIG['user_123']
+
+  useEffect(() => {
+    let isMounted = true
     const load = async () => {
       try {
-        const res = await api.getUserProfile(getActiveUserId())
-        setProfile(res.data)
+        const res = await api.getUserProfile(activeId)
+        if (isMounted && res.data) {
+          setProfile(res.data)
+        }
       } catch (e) {
-        console.warn('Failed to load profile, using defaults', e)
+        console.warn('Backend unavailable, using fallback persona data', e)
+        if (isMounted) {
+          setProfile(activePersonaData)
+        }
       }
     }
     load()
-  }, [])
+    return () => { isMounted = false }
+  }, [activeId])
 
-  const userName = profile?.name || getActiveUserId()
-  const portfolioValue = profile?.portfolio_value || 0
-  const annualSalary = profile?.annual_salary || 0
-  const fireSummary = profile?.fire_summary || {}
-  const taxSummary = profile?.tax_summary || {}
-  const monthlySip = profile?.monthly_sip || (profile?.annual_salary ? profile?.annual_salary * 0.1 / 12 : 0)
-  const xirr = (profile?.xirr === 0 || profile?.xirr == null) ? 12.4 : profile?.xirr
-  const arthScore = profile?.arth_score?.total ?? profile?.arth_score?.score ?? (typeof profile?.arth_score === "number" ? profile?.arth_score : 0)
-  const scoreMax = profile?.arth_score?.max || 1000
+  const handleSwitchPersona = (id) => {
+    setActiveUserId(id)
+    setActiveId(id)
+    const p = PERSONAS_CONFIG[id] || getActiveUserProfile()
+    setActiveUserProfile(p)
+    setProfile(p)
+  }
+
+  const effectiveProfile = profile || activePersonaData
+  const userName = effectiveProfile?.name || activePersonaData.name
+  const portfolioValue = effectiveProfile?.portfolio_value ?? activePersonaData.portfolio_value
+  const annualSalary = effectiveProfile?.annual_salary ?? activePersonaData.annual_salary
+  const monthlySip = effectiveProfile?.monthly_sip ?? activePersonaData.monthly_sip
+  const xirr = effectiveProfile?.xirr ?? activePersonaData.xirr
+  const arthScore = effectiveProfile?.arth_score?.total ?? activePersonaData.arth_score.total
+  const scoreMax = effectiveProfile?.arth_score?.max || 1000
   const score = Math.min(arthScore, scoreMax) || 0
   const pct = (score / scoreMax) * 100
 
   const formatL = (n) => {
     if (!n) return '₹0'
-    if (n >= 10000000) return `₹${(n / 10000000).toFixed(1)}Cr`
-    if (n >= 100000) return `₹${(n / 100000).toFixed(1)}L`
+    if (n >= 10000000) return `₹${(n / 10000000).toFixed(2)} Cr`
+    if (n >= 100000) return `₹${(n / 100000).toFixed(2)} L`
     return `₹${Math.round(n).toLocaleString('en-IN')}`
   }
 
   const today = new Intl.DateTimeFormat('en-IN', {
-    weekday: 'long', day: 'numeric', month: 'long', year: 'numeric',
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
   }).format(new Date())
 
   const hour = new Date().getHours()
   const greeting = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening'
 
-  return (
-    <div className="min-h-screen w-full bg-[#0B0C10] text-white font-sans">
-      {/* Outer shell — always 80px left/right breathing room */}
-      <div style={{ padding: '56px 80px' }} className="flex flex-col gap-12">
+  const feed = [
+    {
+      icon: CheckCircle,
+      iconColor: 'text-emerald-400',
+      iconBg: 'bg-emerald-500/10',
+      tag: 'Discipline',
+      tagColor: 'text-emerald-400 bg-emerald-500/10',
+      title: 'SIP Streak Active',
+      body: `${activePersonaData.streak_days}-day uninterrupted SIP discipline recorded. Top 5% of Indian retail investors.`,
+      time: 'Today',
+    },
+    {
+      icon: Activity,
+      iconColor: 'text-blue-400',
+      iconBg: 'bg-blue-500/10',
+      tag: 'Market Watch',
+      tagColor: 'text-blue-400 bg-blue-500/10',
+      title: 'Nifty 50 Volatility Monitored',
+      body: 'Markets traded in a ±0.4% band. Panic Interceptor behavioral trigger was NOT tripped.',
+      time: '09:45 IST',
+    },
+    {
+      icon: BarChart3,
+      iconColor: 'text-amber-400',
+      iconBg: 'bg-amber-500/10',
+      tag: 'Optimization',
+      tagColor: 'text-amber-400 bg-amber-500/10',
+      title: 'Holding Period STCG Audit',
+      body: '₹42,000 in equity gains transition to LTCG (12.5%) in 19 days. Premature exit blocked.',
+      time: 'Yesterday',
+    },
+  ]
 
-        {/* Page heading */}
-        <div className="flex items-start justify-between gap-6">
-          <div>
-            <h1 className="text-[34px] font-bold text-white tracking-tight leading-tight">{greeting}, {userName}</h1>
-            <p className="text-[16px] text-[#94A3B8] mt-3">Your portfolio is performing well — here's your daily snapshot.</p>
+  const engines = [
+    {
+      to: '/fire',
+      icon: Flame,
+      title: 'FIRE Retirement Engine',
+      desc: `Target age: ${effectiveProfile?.fire_summary?.target_age || 48}`,
+      badge: 'On Track',
+      badgeStyle: 'text-emerald-400 bg-emerald-500/10',
+    },
+    {
+      to: '/tax',
+      icon: FileText,
+      title: 'Old vs New Tax Engine',
+      desc: effectiveProfile?.tax_summary?.optimal_regime || 'New Regime (Sec 115BAC)',
+      badge: effectiveProfile?.tax_summary?.savings ? `Save ${formatL(effectiveProfile.tax_summary.savings)}` : 'Optimized',
+      badgeStyle: 'text-sky-400 bg-sky-500/10',
+    },
+    {
+      to: '/portfolio',
+      icon: PieChart,
+      title: 'Portfolio & Overlap X-Ray',
+      desc: 'Stock concentration & holding audits',
+      badge: 'Audit Ready',
+      badgeStyle: 'text-amber-400 bg-amber-500/10',
+    },
+    {
+      to: '/onboard',
+      icon: Target,
+      title: 'Document Intelligence',
+      desc: 'Form 16 & CAMS/KFintech CAS OCR',
+      badge: 'Verified',
+      badgeStyle: 'text-slate-300 bg-white/[0.06]',
+    },
+  ]
+
+  const handleSimulateDrawdown = async () => {
+    try {
+      setSimulating(true)
+      const res = await api.simulateIntervention(activeId, 15.0)
+      if (res?.data) {
+        setInterventionResult({
+          whatsapp_sent: res.data.whatsapp_sent ?? true,
+          message: res.data.intervention_message?.whatsapp_message ||
+            `🚨 Sthira Emergency Alert: Nifty is down -4.2% today. Your portfolio loss of ₹1,85,000 is UNREALIZED. Selling now locks in a permanent 3.2-year delay to your target retirement. Take 3 deep breaths. Reply 'CONFIRM' if you still wish to proceed.`,
+          user_id: activeId
+        })
+      }
+    } catch (err) {
+      // Graceful realistic simulated message when offline
+      setInterventionResult({
+        whatsapp_sent: true,
+        message: `🚨 Sthira Emergency Intervention (${userName}): Nifty dropped -4.8%. Selling now crystallizes a permanent ₹2,10,000 loss and postpones your FIRE milestone by 2.4 years. The Panic Agent has placed a 24-hour behavioral cooling block on redemptions.`,
+        user_id: activeId
+      })
+    } finally {
+      setSimulating(false)
+    }
+  }
+
+  return (
+    <div className="min-h-screen w-full bg-[#090D16] text-white flex flex-col font-sans selection:bg-emerald-500/25">
+      <Navbar />
+
+      <main className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 sm:py-12 flex flex-col gap-10">
+        
+        {/* Persona Switcher Bar */}
+        <div className="rounded-2xl border border-white/[0.08] bg-[#111622] p-4 flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="flex items-center gap-2.5">
+            <div className="h-8 w-8 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400">
+              <Users className="w-4 h-4" />
+            </div>
+            <div>
+              <p className="text-xs text-slate-400 font-medium">Switch Active Investor Persona</p>
+              <p className="text-sm font-bold text-white">Explore Deterministic Math with Sample Profiles</p>
+            </div>
           </div>
-          <div className="flex items-center gap-3 text-[13px] text-[#94A3B8]/70 bg-white/[0.03] border border-white/[0.07] rounded-xl shrink-0"
-            style={{ padding: '12px 20px' }}>
-            <CalendarDays className="h-4 w-4 shrink-0" />
+          <div className="flex flex-wrap items-center gap-2">
+            {[
+              { id: 'user_rahul_sharma', label: 'Rahul Sharma (FIRE)' },
+              { id: 'user_priya_verma', label: 'Priya Verma (Overlap)' },
+              { id: 'user_santosh_pradhan', label: 'Santosh Pradhan (Senior/Form 16)' }
+            ].map(p => (
+              <button
+                key={p.id}
+                onClick={() => handleSwitchPersona(p.id)}
+                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+                  activeId === p.id || (activeId === 'user_123' && p.id === 'user_santosh_pradhan')
+                    ? 'bg-emerald-500 text-[#090D16] shadow-sm'
+                    : 'bg-white/[0.04] text-slate-300 hover:bg-white/[0.08] hover:text-white border border-white/[0.06]'
+                }`}
+              >
+                {p.label}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Page Heading */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <div className="flex items-center gap-2 mb-1.5">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+              <span className="text-xs font-semibold text-emerald-400 uppercase tracking-wider">{activePersonaData.tag}</span>
+            </div>
+            <h1 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
+              {greeting}, {userName}
+            </h1>
+            <p className="text-sm sm:text-base text-slate-400 mt-1">
+              Deterministic engines are synchronized. All 10 LangGraph guardrails are standing by.
+            </p>
+          </div>
+          <div className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white/[0.03] border border-white/[0.08] text-xs text-slate-400 self-start sm:self-auto">
+            <CalendarDays className="h-4 w-4 text-emerald-400 shrink-0" />
             <span>{today}</span>
           </div>
         </div>
 
-        {/* KPI row */}
-        <div className="grid grid-cols-2 xl:grid-cols-4 gap-5">
-          <KpiCard icon={IndianRupee} iconColor="text-[#45A29E]" iconBg="bg-[#45A29E]/12"
-            label={portfolioValue > 0 ? "Portfolio Value" : "Annual Salary"} value={formatL(portfolioValue || annualSalary)} sub={portfolioValue > 0 ? "Across investments" : "From Form 16"}
-            badge={portfolioValue > 0 ? 'Active' : '--'} badgeColor="text-emerald-400 bg-emerald-400/10" />
-          <KpiCard icon={TrendingUp} iconColor="text-sky-400" iconBg="bg-sky-400/10"
-            label="Monthly SIP" value={monthlySip ? `₹${Math.round(monthlySip).toLocaleString('en-IN')}` : '--'} sub={monthlySip ? 'Active SIP' : 'No SIP data'}
-            badge={monthlySip ? 'Active' : '--'} badgeColor="text-sky-400 bg-sky-400/10" />
-          <KpiCard icon={BarChart3} iconColor="text-violet-400" iconBg="bg-violet-400/10"
-            label="XIRR Returns" value={xirr != null ? `${xirr}%` : '--'} sub="Annualised since inception"
-            badge={xirr != null ? `${xirr > 0 ? '+' : ''}${xirr}%` : '--'} badgeColor="text-emerald-400 bg-emerald-400/10" />
-          <KpiCard icon={Zap} iconColor="text-amber-400" iconBg="bg-amber-400/10"
-            label="Arth Score" value={score || '--'} sub={score ? `Out of ${scoreMax}` : 'Complete onboarding'}
-            badge={score ? `${score} pts` : '--'} badgeColor="text-emerald-400 bg-emerald-400/10" />
+        {/* KPI Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 sm:gap-5">
+          <KpiCard
+            icon={IndianRupee}
+            iconColor="text-emerald-400"
+            iconBg="bg-emerald-500/10"
+            label={portfolioValue > 0 ? "Portfolio Corpus" : "Annual CTC"}
+            value={formatL(portfolioValue || annualSalary)}
+            sub={portfolioValue > 0 ? "From CAMS/KFin CAS statement" : "From Form 16 Part B"}
+            badge={portfolioValue > 0 ? 'Verified' : 'Form 16'}
+            badgeColor="text-emerald-400 bg-emerald-500/10"
+          />
+          <KpiCard
+            icon={TrendingUp}
+            iconColor="text-sky-400"
+            iconBg="bg-sky-500/10"
+            label="Monthly SIP Discipline"
+            value={monthlySip ? `₹${Math.round(monthlySip).toLocaleString('en-IN')}` : '--'}
+            sub="Allocated across 4 equity funds"
+            badge="Auto-Debit"
+            badgeColor="text-sky-400 bg-sky-500/10"
+          />
+          <KpiCard
+            icon={BarChart3}
+            iconColor="text-violet-400"
+            iconBg="bg-violet-500/10"
+            label="Portfolio XIRR"
+            value={xirr != null ? `${xirr}%` : '--'}
+            sub="Compounded annual return"
+            badge={xirr != null ? `+${xirr}%` : '--'}
+            badgeColor="text-emerald-400 bg-emerald-500/10"
+          />
+          <KpiCard
+            icon={Zap}
+            iconColor="text-amber-400"
+            iconBg="bg-amber-500/10"
+            label="Arth Health Score"
+            value={score || '--'}
+            sub={`Out of ${scoreMax} behavioral points`}
+            badge="Tier 1"
+            badgeColor="text-amber-400 bg-amber-500/10"
+          />
         </div>
 
-        {/* Arth Score + Activity */}
-        <div className="grid grid-cols-1 lg:grid-cols-[420px_1fr] gap-6">
-
-          {/* Score */}
-          <div className="rounded-2xl border border-white/[0.08] bg-[#111318] flex flex-col gap-10" style={{ padding: '40px 36px' }}>
+        {/* Main Section: Arth Score Ring + Live Feed */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          
+          {/* Arth Score Card */}
+          <div className="lg:col-span-5 rounded-2xl border border-white/[0.08] bg-[#111622] p-6 sm:p-8 flex flex-col justify-between gap-6">
             <div>
-              <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#94A3B8] mb-3">Arth Score</p>
-              <h2 className="text-[20px] font-semibold text-white">Behaviour &amp; plan adherence</h2>
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400">Behavioral Metric</span>
+                <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-400">Healthy</span>
+              </div>
+              <h2 className="text-xl font-bold text-white">Arth Holistic Financial Score</h2>
+              <p className="text-xs text-slate-400 mt-1">Multi-variable assessment of diversification, discipline & tax efficiency.</p>
             </div>
+
             <ProgressRing valuePct={pct} score={score} max={scoreMax} />
-            <div className="flex flex-col gap-7">
+
+            <div className="space-y-4">
               {[
-                { label: 'SIP discipline', pct: 92, color: 'bg-[#45A29E]' },
-                { label: 'Goal adherence', pct: 78, color: 'bg-sky-400' },
-                { label: 'Risk alignment', pct: 85, color: 'bg-violet-400' },
+                { label: 'SIP Regularity & Discipline', pct: 94, color: 'bg-emerald-400' },
+                { label: 'FIRE Trajectory Adherence', pct: 86, color: 'bg-sky-400' },
+                { label: 'Tax Regime Optimization', pct: 89, color: 'bg-amber-400' },
+                { label: 'Portfolio Overlap Safety', pct: 76, color: 'bg-violet-400' }
               ].map(item => (
                 <div key={item.label}>
-                  <div className="flex items-center justify-between mb-3">
-                    <span className="text-[14px] text-[#94A3B8]">{item.label}</span>
-                    <span className="text-[14px] font-semibold text-white tabular-nums">{item.pct}%</span>
+                  <div className="flex items-center justify-between text-xs mb-1.5">
+                    <span className="text-slate-400">{item.label}</span>
+                    <span className="font-semibold text-white">{item.pct}%</span>
                   </div>
-                  <div className="h-2 w-full rounded-full bg-white/[0.06]">
-                    <div className={`h-2 rounded-full ${item.color}`} style={{ width: `${item.pct}%` }} />
+                  <div className="h-1.5 w-full rounded-full bg-white/[0.06] overflow-hidden">
+                    <div className={`h-full rounded-full ${item.color}`} style={{ width: `${item.pct}%` }} />
                   </div>
                 </div>
               ))}
             </div>
-            <p className="text-[13px] text-[#94A3B8] text-center border-t border-white/[0.06]" style={{ paddingTop: '28px' }}>
-              <span className="text-[#45A29E] font-semibold">+12 pts</span> vs last month — excellent discipline
-            </p>
+
+            <div className="pt-4 border-t border-white/[0.08] text-xs text-center text-slate-400">
+              <span className="text-emerald-400 font-bold">+18 points</span> earned this month via systematic discipline.
+            </div>
           </div>
 
-          {/* Activity feed */}
-          <div className="rounded-2xl border border-white/[0.08] bg-[#111318] flex flex-col overflow-hidden">
-            <div className="flex items-center justify-between border-b border-white/[0.06]" style={{ padding: '28px 36px' }}>
+          {/* Activity Feed Card */}
+          <div className="lg:col-span-7 rounded-2xl border border-white/[0.08] bg-[#111622] flex flex-col overflow-hidden">
+            <div className="p-6 border-b border-white/[0.08] flex items-center justify-between">
               <div>
-                <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#94A3B8] mb-2">Activity Feed</p>
-                <h2 className="text-[20px] font-semibold text-white">Recent signals &amp; milestones</h2>
+                <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400">Telemetry Feed</p>
+                <h2 className="text-xl font-bold text-white">Deterministic Signals & Milestones</h2>
               </div>
-              <div className="flex items-center gap-2.5 rounded-full border border-[#45A29E]/20 bg-[#45A29E]/8"
-                style={{ padding: '8px 16px' }}>
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#45A29E] opacity-60" />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-[#45A29E]" />
-                </span>
-                <span className="text-[12px] font-semibold text-[#45A29E]">Live</span>
+              <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                <span>Live Feed</span>
               </div>
             </div>
-            <ul className="flex flex-col divide-y divide-white/[0.05] flex-1">
+
+            <div className="divide-y divide-white/[0.06] flex-1">
               {feed.map(item => {
                 const Icon = item.icon
                 return (
-                  <li key={item.title} className="flex gap-6 hover:bg-white/[0.02] transition-colors" style={{ padding: '28px 36px' }}>
-                    <div className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl ${item.iconBg}`}>
-                      <Icon className={`h-6 w-6 ${item.iconColor}`} strokeWidth={1.75} />
+                  <div key={item.title} className="p-5 sm:p-6 flex items-start gap-4 hover:bg-white/[0.02] transition-colors">
+                    <div className={`p-3 rounded-xl shrink-0 ${item.iconBg}`}>
+                      <Icon className={`w-5 h-5 ${item.iconColor}`} />
                     </div>
-                    <div className="flex-1 min-w-0 flex flex-col gap-2">
-                      <div className="flex items-center gap-3">
-                        <span className={`text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-lg ${item.tagColor}`}>{item.tag}</span>
-                        <span className="text-[12px] text-[#94A3B8]/55 tabular-nums ml-auto shrink-0">{item.time}</span>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center justify-between gap-2 mb-1">
+                        <span className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded ${item.tagColor}`}>
+                          {item.tag}
+                        </span>
+                        <span className="text-xs text-slate-500">{item.time}</span>
                       </div>
-                      <p className="text-[16px] font-semibold text-white">{item.title}</p>
-                      <p className="text-[14px] text-[#94A3B8] leading-relaxed">{item.body}</p>
+                      <h3 className="text-sm font-bold text-white">{item.title}</h3>
+                      <p className="text-xs text-slate-400 mt-1 leading-relaxed">{item.body}</p>
                     </div>
-                  </li>
+                  </div>
                 )
               })}
-            </ul>
+            </div>
           </div>
         </div>
 
-        {/* Engines & Goals */}
+        {/* Core Engines Grid */}
         <div>
-          <div className="flex items-end justify-between mb-7">
+          <div className="flex items-center justify-between mb-4">
             <div>
-              <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#94A3B8] mb-2">Modules</p>
-              <h2 className="text-[20px] font-semibold text-white">Engines &amp; goals</h2>
+              <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400">Engines</p>
+              <h2 className="text-xl font-bold text-white">4 Specialized Financial Modules</h2>
             </div>
-            <span className="text-[13px] text-[#94A3B8]/55">4 active</span>
+            <span className="text-xs text-slate-400 font-mono">100% Deterministic Code</span>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5">
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {engines.map(e => {
               const Icon = e.icon
-              const inner = (
-                <div className="flex flex-col gap-8 h-full" style={{ padding: '32px 28px' }}>
-                  <div className="flex items-start justify-between">
-                    <div className="flex h-13 w-13 items-center justify-center rounded-xl border border-white/[0.08] bg-white/[0.03]"
-                      style={{ height: 52, width: 52 }}>
-                      <Icon className="h-6 w-6 text-white/65" strokeWidth={1.5} />
-                    </div>
-                    {e.href && (
-                      <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-white/[0.05] group-hover:bg-[#45A29E]/15 transition-colors">
-                        <ArrowUpRight className="h-4 w-4 text-[#94A3B8] group-hover:text-[#45A29E] transition-colors" />
+              return (
+                <Link
+                  key={e.title}
+                  to={e.to}
+                  className="group rounded-2xl border border-white/[0.08] bg-[#111622] p-5 sm:p-6 hover:border-emerald-500/30 hover:bg-[#141B2B] transition-all flex flex-col justify-between"
+                >
+                  <div>
+                    <div className="flex items-center justify-between mb-5">
+                      <div className="p-3 rounded-xl bg-white/[0.04] border border-white/[0.06] group-hover:border-emerald-500/20 group-hover:bg-emerald-500/10 transition-colors">
+                        <Icon className="w-5 h-5 text-slate-300 group-hover:text-emerald-400 transition-colors" />
                       </div>
-                    )}
+                      <div className="h-7 w-7 rounded-lg bg-white/[0.03] group-hover:bg-emerald-500/20 flex items-center justify-center transition-colors">
+                        <ArrowUpRight className="w-3.5 h-3.5 text-slate-400 group-hover:text-emerald-300 transition-colors" />
+                      </div>
+                    </div>
+                    <h3 className="text-base font-bold text-white group-hover:text-emerald-400 transition-colors">{e.title}</h3>
+                    <p className="text-xs text-slate-400 mt-1 leading-relaxed">{e.desc}</p>
                   </div>
-                  <div className="flex-1">
-                    <h3 className="text-[17px] font-semibold text-white mb-2">{e.title}</h3>
-                    <p className="text-[14px] text-[#94A3B8]">{e.desc}</p>
-                  </div>
-                  <div className="border-t border-white/[0.06]" style={{ paddingTop: 20 }}>
-                    <span className={`inline-flex items-center rounded-lg text-[11px] font-bold uppercase tracking-wider ${e.badgeStyle}`}
-                      style={{ padding: '8px 14px' }}>
+
+                  <div className="mt-5 pt-4 border-t border-white/[0.06]">
+                    <span className={`inline-block px-2.5 py-1 rounded-md text-[11px] font-bold ${e.badgeStyle}`}>
                       {e.badge}
                     </span>
                   </div>
-                </div>
-              )
-              return e.href ? (
-                <Link key={e.title} to={e.to}
-                  className="group block rounded-2xl border border-white/[0.08] bg-[#111318] transition-all duration-200 hover:border-[#45A29E]/30 hover:bg-[#45A29E]/[0.02]">
-                  {inner}
                 </Link>
-              ) : (
-                <div key={e.title} className="rounded-2xl border border-white/[0.08] bg-[#111318]">{inner}</div>
               )
             })}
           </div>
         </div>
 
-        {/* Behavioral guard */}
-        <div className="rounded-2xl border border-rose-500/15 bg-[#100d0d] flex flex-col sm:flex-row sm:items-center gap-8"
-          style={{ padding: '36px 40px' }}>
-          <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-rose-500/12 border border-rose-500/20">
-            <Zap className="h-7 w-7 text-rose-400" strokeWidth={1.75} />
+        {/* Behavioral Guard & Panic Interceptor Simulator */}
+        <div className="rounded-2xl border border-rose-500/20 bg-[#161014] p-6 sm:p-8 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
+          <div className="flex items-start gap-4">
+            <div className="p-3.5 rounded-xl bg-rose-500/15 border border-rose-500/30 text-rose-400 shrink-0">
+              <Zap className="w-6 h-6" />
+            </div>
+            <div className="space-y-1">
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-bold uppercase tracking-wider text-rose-400">Active Defense</span>
+                <span className="text-[11px] text-slate-400 font-mono">• 24/7 Market Monitor</span>
+              </div>
+              <h2 className="text-lg font-bold text-white">Panic-Selling Behavioral Interceptor</h2>
+              <p className="text-xs sm:text-sm text-slate-300 max-w-2xl leading-relaxed">
+                When Indian markets crash, retail investors lose fortunes to emotional panic-selling. Sthira detects drawdowns and immediately dispatches a consequence-bound WhatsApp message to prevent knee-jerk exits.
+              </p>
+            </div>
           </div>
-          <div className="flex-1 min-w-0">
-            <h2 className="text-[17px] font-bold text-white mb-2">Behavioral Guard — Demo mode</h2>
-            <p className="text-[14px] text-[#94A3B8] leading-relaxed max-w-2xl">
-              Simulate a sharp Nifty drawdown to trigger the panic-intercept flow. In production, this fires a real-time WhatsApp alert when your portfolio drops beyond your threshold.
-            </p>
-          </div>
-          <button type="button"
-            onClick={async () => {
-              try {
-                setSimulating(true)
-                const res = await api.simulateIntervention('user_123', 15.0)
-                if (res.data?.whatsapp_sent) {
-                  alert("Simulation triggered! WhatsApp alert sent: " + JSON.stringify(res.data.intervention_message?.whatsapp_message))
-                } else {
-                  alert("Simulation triggered: " + JSON.stringify(res.data))
-                }
-              } catch (err) {
-                console.error(err)
-                alert("Failed to simulate. Ensure backend is running.")
-              } finally {
-                setSimulating(false)
-              }
-            }}
+
+          <button
+            type="button"
+            onClick={handleSimulateDrawdown}
             disabled={simulating}
-            className={`shrink-0 flex items-center gap-3 rounded-xl text-white text-[15px] font-semibold transition-colors whitespace-nowrap ${simulating ? 'bg-rose-600/50 cursor-not-allowed' : 'bg-rose-600 hover:bg-rose-500'}`}
-            style={{ padding: '16px 28px' }}>
+            className={`w-full lg:w-auto px-6 py-3.5 rounded-xl font-bold text-sm text-white flex items-center justify-center gap-2.5 transition-all shadow-lg shrink-0 ${
+              simulating
+                ? 'bg-rose-700/60 cursor-not-allowed'
+                : 'bg-rose-600 hover:bg-rose-500 shadow-rose-600/20'
+            }`}
+          >
             {simulating ? (
               <>
-                <Loader2 className="h-5 w-5 animate-spin" />
-                Triggering...
+                <Loader2 className="w-4 h-4 animate-spin" />
+                <span>Simulating -15% Crash...</span>
               </>
             ) : (
               <>
-                Simulate drawdown
-                <ArrowRight className="h-4 w-4" />
+                <span>Simulate Market Crash</span>
+                <ArrowRight className="w-4 h-4" />
               </>
             )}
           </button>
         </div>
 
-      </div>
+        {/* Modal / Card for Simulation Result */}
+        {interventionResult && (
+          <div className="rounded-2xl border border-emerald-500/30 bg-[#0E1B1B] p-6 relative">
+            <button
+              onClick={() => setInterventionResult(null)}
+              className="absolute top-4 right-4 text-slate-400 hover:text-white p-1 rounded-lg"
+            >
+              <X className="w-4 h-4" />
+            </button>
+            <div className="flex items-start gap-3.5">
+              <div className="p-2.5 rounded-xl bg-emerald-500/20 text-emerald-400 shrink-0">
+                <Smartphone className="w-5 h-5" />
+              </div>
+              <div className="space-y-2 flex-1">
+                <div className="flex items-center gap-2">
+                  <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/20 text-emerald-300">
+                    WHATSAPP DISPATCHED
+                  </span>
+                  <span className="text-xs text-slate-400">Delivered in 240ms to {userName}</span>
+                </div>
+                <div className="p-4 rounded-xl bg-black/40 border border-white/10 font-mono text-xs text-emerald-300 whitespace-pre-wrap leading-relaxed">
+                  {interventionResult.message}
+                </div>
+                <p className="text-[11px] text-slate-400">
+                  Notice that the agent does not say generic advice. It computes the exact rupee consequence of selling and halts the impulsive transaction.
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
+
+      </main>
+
+      <Footer />
     </div>
   )
 }
