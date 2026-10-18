@@ -37,31 +37,31 @@ export default function LoginForm({ onSwitchToSignup }) {
       loginUser(targetUser);
       setIsLoading(false);
       setActivePage('dashboard');
-    }, 600);
+    }, 500);
   };
 
   return (
     <div className="w-full">
-      <div className="mb-6">
-        <div className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-[#D98324]/15 border border-[#D98324]/40 text-xs font-mono text-[#EFDCAB] mb-3">
-          <ShieldCheck className="h-3.5 w-3.5 text-[#D98324]" />
-          <span>SECURE VAULT ACCESS • RBI 2FA ENABLED</span>
+      <div className="mb-5">
+        <div className="inline-flex items-center space-x-1.5 px-2.5 py-0.5 rounded-full bg-[#D98324]/15 border border-[#D98324]/40 text-[11px] font-mono text-[#EFDCAB] mb-2">
+          <ShieldCheck className="h-3 w-3 text-[#D98324]" />
+          <span>RBI 2FA ENABLED</span>
         </div>
-        <h2 className="text-2xl font-bold tracking-tight text-[#F2F6D0]">
-          Sign In to Sthira OS
+        <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-[#F2F6D0] font-heading">
+          Sign In
         </h2>
-        <p className="text-sm text-[#EFDCAB]/80 mt-1">
-          Access your autonomous financial operating system and behavioral safeguards.
+        <p className="text-xs text-[#EFDCAB]/75 mt-0.5">
+          Access your autonomous wealth vault.
         </p>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-3.5">
         {!otpStep ? (
           <>
-            {/* Identifier (Email / PAN) */}
+            {/* Identifier */}
             <div>
-              <label className="block text-xs font-mono text-[#EFDCAB] uppercase tracking-wider mb-1.5">
-                Email / Registered PAN / Mobile
+              <label className="block text-[11px] font-mono text-[#EFDCAB] uppercase tracking-wider mb-1">
+                Email or PAN
               </label>
               <div className="relative">
                 <input
@@ -70,19 +70,19 @@ export default function LoginForm({ onSwitchToSignup }) {
                   value={identifier}
                   onChange={(e) => setIdentifier(e.target.value)}
                   placeholder="e.g. ankit@outlook.com or ABCPS1234F"
-                  className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-[#1C1510] border border-[#443627] text-[#F2F6D0] placeholder-[#EFDCAB]/40 text-sm focus:outline-none focus:border-[#D98324] focus:ring-1 focus:ring-[#D98324] transition font-mono"
+                  className="w-full pl-9 pr-3 py-2 rounded-xl bg-[#1C1510] border border-[#443627] text-[#F2F6D0] placeholder-[#EFDCAB]/30 text-xs focus:outline-none focus:border-[#D98324] font-mono"
                 />
-                <Mail className="absolute left-3.5 top-3 h-4 w-4 text-[#EFDCAB]/60" />
+                <Mail className="absolute left-3 top-2.5 h-3.5 w-3.5 text-[#EFDCAB]/50" />
               </div>
             </div>
 
             {/* Password */}
             <div>
-              <div className="flex items-center justify-between mb-1.5">
-                <label className="block text-xs font-mono text-[#EFDCAB] uppercase tracking-wider">
-                  Master Password
+              <div className="flex items-center justify-between mb-1">
+                <label className="block text-[11px] font-mono text-[#EFDCAB] uppercase tracking-wider">
+                  Password
                 </label>
-                <a href="#forgot" className="text-xs text-[#D98324] hover:text-[#EFDCAB] hover:underline font-medium">
+                <a href="#forgot" className="text-[11px] text-[#D98324] hover:underline">
                   Forgot key?
                 </a>
               </div>
@@ -93,65 +93,56 @@ export default function LoginForm({ onSwitchToSignup }) {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••••••"
-                  className="w-full pl-10 pr-10 py-2.5 rounded-xl bg-[#1C1510] border border-[#443627] text-[#F2F6D0] placeholder-[#EFDCAB]/40 text-sm focus:outline-none focus:border-[#D98324] focus:ring-1 focus:ring-[#D98324] transition font-mono"
+                  className="w-full pl-9 pr-9 py-2 rounded-xl bg-[#1C1510] border border-[#443627] text-[#F2F6D0] placeholder-[#EFDCAB]/30 text-xs focus:outline-none focus:border-[#D98324] font-mono"
                 />
-                <Lock className="absolute left-3.5 top-3 h-4 w-4 text-[#EFDCAB]/60" />
+                <Lock className="absolute left-3 top-2.5 h-3.5 w-3.5 text-[#EFDCAB]/50" />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3.5 top-3 text-[#EFDCAB]/60 hover:text-[#F2F6D0] transition"
+                  className="absolute right-3 top-2.5 text-[#EFDCAB]/50 hover:text-[#F2F6D0]"
                 >
-                  {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                  {showPassword ? <EyeOff className="h-3.5 w-3.5" /> : <Eye className="h-3.5 w-3.5" />}
                 </button>
               </div>
             </div>
 
-            {/* RBI 2FA Toggle */}
-            <div className="flex items-center justify-between p-3 rounded-xl bg-[#1C1510]/80 border border-[#443627]">
-              <div className="flex items-center space-x-2.5">
-                <KeyRound className="h-4 w-4 text-[#D98324]" />
-                <div>
-                  <div className="text-xs font-semibold text-[#F2F6D0]">RBI Mandatory 2FA OTP</div>
-                  <div className="text-[11px] text-[#EFDCAB]/75">Two-factor auth via registered mobile OTP</div>
-                </div>
+            {/* 2FA Toggle */}
+            <div className="flex items-center justify-between p-2.5 rounded-xl bg-[#1C1510] border border-[#443627]">
+              <div className="flex items-center space-x-2">
+                <KeyRound className="h-3.5 w-3.5 text-[#D98324]" />
+                <div className="text-xs text-[#F2F6D0]">2FA Mobile OTP Verification</div>
               </div>
               <input
                 type="checkbox"
                 checked={enable2FA}
                 onChange={(e) => setEnable2FA(e.target.checked)}
-                className="w-4 h-4 rounded accent-[#D98324] cursor-pointer"
+                className="w-3.5 h-3.5 rounded accent-[#D98324] cursor-pointer"
               />
             </div>
           </>
         ) : (
-          /* Step 2: 2FA OTP Screen */
-          <div className="p-4 rounded-xl bg-[#443627]/40 border border-[#D98324]/50 space-y-3">
-            <div className="flex items-center space-x-2 text-[#D98324]">
-              <CheckCircle2 className="h-5 w-5" />
-              <div className="text-sm font-semibold text-[#F2F6D0]">Enter 6-Digit RBI Security OTP</div>
+          <div className="p-3.5 rounded-xl bg-[#443627]/40 border border-[#D98324]/50 space-y-2.5">
+            <div className="flex items-center space-x-1.5 text-[#D98324]">
+              <CheckCircle2 className="h-4 w-4" />
+              <div className="text-xs font-semibold text-[#F2F6D0]">Enter 6-Digit OTP</div>
             </div>
-            <p className="text-xs text-[#EFDCAB]">
-              An OTP has been dispatched to your Aadhaar-linked phone for multi-factor authentication.
-            </p>
-            <div>
-              <label className="block text-[11px] font-mono text-[#EFDCAB]/80 uppercase tracking-wider mb-1">
-                One-Time Security Passcode (Demo OTP: 849201)
-              </label>
-              <input
-                type="text"
-                maxLength={6}
-                value={otpCode}
-                onChange={(e) => setOtpCode(e.target.value)}
-                className="w-full text-center text-xl font-mono tracking-widest py-2.5 rounded-lg bg-[#120E0A] border border-[#D98324]/60 text-[#EFDCAB] focus:outline-none focus:ring-2 focus:ring-[#D98324]"
-              />
+            <input
+              type="text"
+              maxLength={6}
+              value={otpCode}
+              onChange={(e) => setOtpCode(e.target.value)}
+              className="w-full text-center text-lg font-mono tracking-widest py-2 rounded-lg bg-[#120E0A] border border-[#D98324]/60 text-[#EFDCAB] focus:outline-none focus:ring-1 focus:ring-[#D98324]"
+            />
+            <div className="flex justify-between items-center text-[10px] text-[#EFDCAB]/70">
+              <button
+                type="button"
+                onClick={() => setOtpStep(false)}
+                className="underline hover:text-[#F2F6D0]"
+              >
+                ← Back
+              </button>
+              <span>Demo OTP: 849201</span>
             </div>
-            <button
-              type="button"
-              onClick={() => setOtpStep(false)}
-              className="text-xs text-[#EFDCAB]/80 hover:text-[#F2F6D0] underline"
-            >
-              ← Back to credentials
-            </button>
           </div>
         )}
 
@@ -159,29 +150,29 @@ export default function LoginForm({ onSwitchToSignup }) {
         <button
           type="submit"
           disabled={isLoading}
-          className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-[#D98324] via-[#e5943b] to-[#EFDCAB] hover:brightness-105 text-[#271E16] font-bold text-sm flex items-center justify-center space-x-2 shadow-lg shadow-[#D98324]/20 transition duration-200 cursor-pointer disabled:opacity-50"
+          className="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-[#D98324] via-[#e5943b] to-[#EFDCAB] hover:brightness-105 text-[#271E16] font-bold text-xs flex items-center justify-center space-x-1.5 shadow-md shadow-[#D98324]/20 transition cursor-pointer disabled:opacity-50"
         >
-          <span>{isLoading ? 'Verifying Credentials...' : otpStep ? 'Authorize & Enter Vault' : enable2FA ? 'Verify Credentials with 2FA →' : 'Unlock Wealth Vault'}</span>
-          <ArrowRight className="h-4 w-4" />
+          <span>{isLoading ? 'Verifying...' : otpStep ? 'Authorize Vault' : 'Unlock Vault'}</span>
+          <ArrowRight className="h-3.5 w-3.5" />
         </button>
       </form>
 
-      {/* Instant Demo Personas Shortcut (Judge Friendly) */}
-      <div className="mt-6 pt-5 border-t border-[#443627]">
-        <div className="text-[11px] font-mono text-[#EFDCAB]/80 uppercase tracking-wider mb-2.5 text-center">
-          ⚡ Instant Demo Persona Access (Pre-Configured)
+      {/* Preset Personas */}
+      <div className="mt-5 pt-4 border-t border-[#443627]">
+        <div className="text-[10px] font-mono text-[#EFDCAB]/70 uppercase tracking-wider mb-2 text-center">
+          Quick Demo Login
         </div>
-        <div className="grid grid-cols-3 gap-2">
+        <div className="grid grid-cols-3 gap-1.5">
           <button
             type="button"
             onClick={() => {
               switchPersona('ankit');
               setActivePage('dashboard');
             }}
-            className="p-2 rounded-lg bg-[#1C1510] border border-[#443627] hover:border-[#D98324] text-left transition text-xs"
+            className="p-1.5 rounded-lg bg-[#1C1510] border border-[#443627] hover:border-[#D98324] text-left transition"
           >
-            <div className="font-semibold text-[#F2F6D0]">Ankit (SDE-2)</div>
-            <div className="text-[10px] text-[#D98324]">Age 28 • ₹24L</div>
+            <div className="font-semibold text-[#F2F6D0] text-xs">Ankit</div>
+            <div className="text-[9px] text-[#D98324] font-mono">SDE-2 • ₹24L</div>
           </button>
           <button
             type="button"
@@ -189,10 +180,10 @@ export default function LoginForm({ onSwitchToSignup }) {
               switchPersona('priya');
               setActivePage('dashboard');
             }}
-            className="p-2 rounded-lg bg-[#1C1510] border border-[#443627] hover:border-[#EFDCAB] text-left transition text-xs"
+            className="p-1.5 rounded-lg bg-[#1C1510] border border-[#443627] hover:border-[#EFDCAB] text-left transition"
           >
-            <div className="font-semibold text-[#F2F6D0]">Priya (Lead)</div>
-            <div className="text-[10px] text-[#EFDCAB]">Age 34 • ₹42L</div>
+            <div className="font-semibold text-[#F2F6D0] text-xs">Priya</div>
+            <div className="text-[9px] text-[#EFDCAB] font-mono">Lead • ₹42L</div>
           </button>
           <button
             type="button"
@@ -200,23 +191,22 @@ export default function LoginForm({ onSwitchToSignup }) {
               switchPersona('santosh');
               setActivePage('dashboard');
             }}
-            className="p-2 rounded-lg bg-[#1C1510] border border-[#443627] hover:border-[#D98324] text-left transition text-xs"
+            className="p-1.5 rounded-lg bg-[#1C1510] border border-[#443627] hover:border-[#D98324] text-left transition"
           >
-            <div className="font-semibold text-[#F2F6D0]">Santosh (Senior)</div>
-            <div className="text-[10px] text-[#D98324]">Age 64 • ₹18L</div>
+            <div className="font-semibold text-[#F2F6D0] text-xs">Santosh</div>
+            <div className="text-[9px] text-[#D98324] font-mono">Senior • ₹18L</div>
           </button>
         </div>
       </div>
 
-      {/* Switch to Signup */}
-      <div className="mt-6 text-center text-sm text-[#EFDCAB]/80">
-        Don't have a verified vault account?{' '}
+      <div className="mt-4 text-center text-xs text-[#EFDCAB]/70">
+        New to Sthira?{' '}
         <button
           type="button"
           onClick={onSwitchToSignup}
-          className="text-[#D98324] hover:text-[#EFDCAB] font-semibold underline underline-offset-4 ml-1"
+          className="text-[#D98324] hover:text-[#EFDCAB] font-semibold underline ml-1"
         >
-          Open RBI & SEBI Compliant Account →
+          Create Account →
         </button>
       </div>
     </div>

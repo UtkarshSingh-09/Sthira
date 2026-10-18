@@ -15,7 +15,9 @@
     --border-subtle: rgba(239, 220, 171, 0.12);
     --border-accent: rgba(217, 131, 36, 0.4);
     
-    --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    /* UI/UX Pro Max Fintech/Crypto Typography */
+    --font-heading: 'Orbitron', -apple-system, sans-serif;
+    --font-sans: 'Exo 2', system-ui, -apple-system, sans-serif;
     --font-mono: 'JetBrains Mono', monospace;
   }
 
@@ -25,6 +27,11 @@
     font-family: var(--font-sans);
     min-height: 100vh;
     overflow-x: hidden;
+  }
+
+  h1, h2, h3, .font-heading {
+    font-family: var(--font-heading);
+    letter-spacing: -0.02em;
   }
 
   /* Custom luxury warm scrollbar */
